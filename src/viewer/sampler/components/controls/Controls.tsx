@@ -11,6 +11,7 @@ import VirtualNode from '../../node/VirtualNode';
 import SamplerData from '../../SamplerData';
 import SamplerTitle from '../SamplerTitle';
 import { View } from '../views/types';
+import AiButton from './AiButton';
 import ExitFlameButton from './ExitFlameButton';
 import FlameButton from './FlameButton';
 import LastUpdateSpinner from './LastUpdateSpinner';
@@ -26,6 +27,8 @@ export interface ControlsProps {
     exportCallback: ExportCallback;
     showSettings: boolean;
     setShowSettings: Dispatch<SetStateAction<boolean>>;
+    showAi: boolean;
+    setShowAi: Dispatch<SetStateAction<boolean>>;
     view: View;
     setView: Dispatch<SetStateAction<View>>;
     sourcesViewSupported: boolean;
@@ -47,6 +50,8 @@ export default function Controls({
     exportCallback,
     showSettings,
     setShowSettings,
+    showAi,
+    setShowAi,
     view,
     setView,
     sourcesViewSupported,
@@ -85,6 +90,7 @@ export default function Controls({
                         sourcesViewSupported={sourcesViewSupported}
                     />
                     <FlameButton data={data} setFlameData={setFlameData} />
+                    <AiButton showAi={showAi} setShowAi={setShowAi} />
                     <ExportButton exportCallback={exportCallback} />
                     <SearchBar searchQuery={searchQuery} />
                 </>

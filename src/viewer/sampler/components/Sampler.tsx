@@ -2,6 +2,7 @@ import dynamic from 'next/dynamic';
 import { Suspense, useEffect, useState } from 'react';
 import { Item, ItemParams, Menu } from 'react-contexify';
 import 'react-contexify/dist/ReactContexify.css';
+import { useTranslation } from 'react-i18next';
 import { Tooltip } from 'react-tooltip';
 import styles from '../../../style/sampler.module.scss';
 import VersionWarning from '../../common/components/VersionWarning';
@@ -22,6 +23,7 @@ import SamplerData from '../SamplerData';
 import { FlatViewData } from '../worker/FlatViewGenerator';
 import RemoteSamplerWorker from '../worker/RemoteSamplerWorker';
 import { SourcesViewData } from '../worker/SourceViewGenerator';
+import AiPanel from './ai/AiPanel';
 import Controls from './controls/Controls';
 import Flame from './flamegraph/Flame';
 import NoData from './misc/NoData';
@@ -50,6 +52,7 @@ export default function Sampler({
     setMetadata,
     exportCallback,
 }: SamplerProps) {
+    const { t } = useTranslation('sampler');
     const searchQuery = useSearchQuery(data);
     const highlighted = useHighlight();
     const [labelMode, setLabelMode] = useState(false);
@@ -66,6 +69,7 @@ export default function Sampler({
         true
     );
     const [showSettings, setShowSettings] = useState<boolean>(false);
+    const [showAi, setShowAi] = useState<boolean>(false);
     const [showSocketInfo, setShowSocketInfo] = useToggle(
         'prefShowSocket',
         false
@@ -163,6 +167,8 @@ export default function Sampler({
                 exportCallback={exportCallback}
                 showSettings={showSettings}
                 setShowSettings={setShowSettings}
+                showAi={showAi}
+                setShowAi={setShowAi}
                 view={view}
                 setView={setView}
                 sourcesViewSupported={data.sources.hasSources()}
@@ -191,6 +197,8 @@ export default function Sampler({
                 <SocketInfo socket={socket} />
             )}
 
+            {showAi && <AiPanel data={data} onClose={() => setShowAi(false)} />}
+
             {!supported && <VersionWarning />}
 
             <WidgetsAndMetadata
@@ -217,7 +225,7 @@ export default function Sampler({
                 />
             )}
 
-            <div style={{ display: flameData ? 'none' : undefined }}>
+            <div style={{ display: flameData || showAi ? 'none' : undefined }}>
                 <SamplerContext
                     mappings={mappings.mappingsResolver}
                     infoPoints={infoPoints}
@@ -258,9 +266,13 @@ export default function Sampler({
             )}
 
             <Menu id={'sampler-cm'} theme="dark">
-                <Item onClick={handleFlame}>View as Flame Graph</Item>
-                <Item onClick={handleHighlight}>Toggle bookmark</Item>
-                <Item onClick={handleHighlightClear}>Clear all bookmarks</Item>
+                <Item onClick={handleFlame}>{t('contextMenu.viewFlame')}</Item>
+                <Item onClick={handleHighlight}>
+                    {t('contextMenu.toggleBookmark')}
+                </Item>
+                <Item onClick={handleHighlightClear}>
+                    {t('contextMenu.clearBookmarks')}
+                </Item>
             </Menu>
         </div>
     );

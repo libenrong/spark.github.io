@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next';
 import { PlatformStatistics_Ping } from '../../../../proto/spark_pb';
 import { formatNumber } from '../../../util/format';
 import { Formatter, WidgetFormat } from '../format';
@@ -9,6 +10,7 @@ export interface PingWidgetProps {
 }
 
 export default function PingWidget({ ping }: PingWidgetProps) {
+    const { t } = useTranslation('widgets');
     const formatter: Formatter = {
         color: value => {
             if (value >= 200) {
@@ -25,11 +27,14 @@ export default function PingWidget({ ping }: PingWidgetProps) {
     };
 
     return (
-        <Widget title="Ping" formatter={formatter}>
-            <WidgetValue value={ping.last15M!.min} label="min" />
-            <WidgetValue value={ping.last15M!.median} label="med" />
-            <WidgetValue value={ping.last15M!.percentile95} label="95%ile" />
-            <WidgetValue value={ping.last15M!.max} label="max" />
+        <Widget id="ping" title={t('title.ping')} formatter={formatter}>
+            <WidgetValue value={ping.last15M!.min} label={t('stat.min')} />
+            <WidgetValue value={ping.last15M!.median} label={t('stat.med')} />
+            <WidgetValue
+                value={ping.last15M!.percentile95}
+                label={t('stat.pct95')}
+            />
+            <WidgetValue value={ping.last15M!.max} label={t('stat.max')} />
         </Widget>
     );
 }

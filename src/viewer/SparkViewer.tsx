@@ -8,6 +8,7 @@ import {
     useMemo,
     useState,
 } from 'react';
+import { useTranslation } from 'react-i18next';
 import TextBox from '../components/TextBox';
 import { SelectedFileContext } from '../pages/_app';
 import { ExportCallback } from './common/logic/export';
@@ -39,12 +40,13 @@ import SamplerData from './sampler/SamplerData';
 const Heap = dynamic(() => import('./heap/Heap'));
 const Sampler = dynamic(() => import('./sampler/components/Sampler'));
 
-export default function SparkViewer() {
+export default function SparkViewer({ code: codeProp }: { code?: string }) {
+    const { t } = useTranslation('common');
     const router = useRouter();
 
     const code = useMemo(() => {
-        return router.query['code'] as string;
-    }, [router]);
+        return codeProp ?? (router.query['code'] as string);
+    }, [codeProp, router]);
 
     const { selectedFile } = useContext(SelectedFileContext);
     const [status, setStatus] = useState<Status>(LOADING_DATA);
@@ -102,19 +104,20 @@ export default function SparkViewer() {
         case LOADING_DATA:
             return (
                 <TextBox>
-                    {code === '_' ? 'Loading file...' : 'Downloading...'}
+                    {code === '_'
+                        ? t('viewer.loadingFile')
+                        : t('viewer.downloading')}
                 </TextBox>
             );
         case FAILED_DATA:
             return (
                 <TextBox extraClassName="loading-error">
-                    Unable to load the data. Perhaps it expired? Are you using a
-                    recent version?
+                    {t('viewer.loadFailed')}
                 </TextBox>
             );
         case LOADED_PROFILE_DATA:
             return (
-                <Suspense fallback={<TextBox>Loading...</TextBox>}>
+                <Suspense fallback={<TextBox>{t('loading')}</TextBox>}>
                     <Sampler
                         data={data as SamplerData}
                         fetchUpdatedData={fetchUpdatedData}
@@ -126,7 +129,7 @@ export default function SparkViewer() {
             );
         case LOADED_HEAP_DATA:
             return (
-                <Suspense fallback={<TextBox>Loading...</TextBox>}>
+                <Suspense fallback={<TextBox>{t('loading')}</TextBox>}>
                     <Heap
                         data={data as HeapData}
                         metadata={metadata as HeapMetadata}
@@ -136,7 +139,7 @@ export default function SparkViewer() {
             );
         case LOADED_HEALTH_DATA:
             return (
-                <Suspense fallback={<TextBox>Loading...</TextBox>}>
+                <Suspense fallback={<TextBox>{t('loading')}</TextBox>}>
                     <Health
                         data={data as HealthData}
                         metadata={metadata as HealthMetadata}
@@ -146,6 +149,6 @@ export default function SparkViewer() {
                 </Suspense>
             );
         default:
-            return <TextBox>Unknown state - this is a bug.</TextBox>;
+            return <TextBox>{t('viewer.unknownState')}</TextBox>;
     }
 }

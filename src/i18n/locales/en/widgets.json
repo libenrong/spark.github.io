@@ -1,0 +1,32 @@
+{
+    "sep": ", ",
+    "title": {
+        "cpu": "CPU",
+        "memory": "Memory",
+        "disk": "Disk",
+        "ping": "Ping",
+        "tps": "TPS",
+        "mspt": "MSPT",
+        "gc": "GC"
+    },
+    "scope": {
+        "process": "process",
+        "system": "system",
+        "physical": "physical",
+        "swap": "swap",
+        "during": "during",
+        "all": "all"
+    },
+    "stat": {
+        "min": "min",
+        "med": "med",
+        "pct95": "95%ile",
+        "max": "max",
+        "oneMin": "1m",
+        "fiveMin": "5m",
+        "fifteenMin": "15m",
+        "total": "total",
+        "avgTime": "avg time",
+        "avgFreq": "avg freq"
+    }
+}

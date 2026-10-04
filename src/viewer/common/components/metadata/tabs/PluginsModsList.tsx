@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import {
     PluginOrModMetadata,
     WorldStatistics_DataPack,
@@ -13,6 +14,7 @@ export default function PluginsModsList({
     plugins,
     dataPacks,
 }: PluginsModsListProps) {
+    const { t } = useTranslation('metadata');
     const [showBuiltinPlugins, setShowBuiltinPlugins] =
         useState<boolean>(false);
     const hasBuiltinPlugins = plugins.some(plugin => plugin.builtIn);
@@ -31,15 +33,18 @@ export default function PluginsModsList({
         <div className="plugins-mods-list">
             {!!plugins.length && (
                 <>
-                    <h2>Plugins/Mods</h2>
+                    <h2>{t('plugins.heading')}</h2>
                     {hasBuiltinPlugins && (
                         <button
                             onClick={() =>
                                 setShowBuiltinPlugins(value => !value)
                             }
                         >
-                            {showBuiltinPlugins ? 'Hide' : 'Show'} built-in
-                            plugins
+                            {t(
+                                showBuiltinPlugins
+                                    ? 'plugins.hideBuiltinPlugins'
+                                    : 'plugins.showBuiltinPlugins'
+                            )}
                         </button>
                     )}
                     <ul>
@@ -53,15 +58,18 @@ export default function PluginsModsList({
             )}
             {!!dataPacks.length && (
                 <>
-                    <h2>Data Packs</h2>
+                    <h2>{t('plugins.dataPacksHeading')}</h2>
                     {hasBuiltinDataPacks && (
                         <button
                             onClick={() =>
                                 setShowBuiltinDataPacks(value => !value)
                             }
                         >
-                            {showBuiltinDataPacks ? 'Hide' : 'Show'} built-in
-                            Data Packs
+                            {t(
+                                showBuiltinDataPacks
+                                    ? 'plugins.hideBuiltinDataPacks'
+                                    : 'plugins.showBuiltinDataPacks'
+                            )}
                         </button>
                     )}
                     <ul>
@@ -111,12 +119,13 @@ const PluginMod = ({
     author,
     description,
 }: PluginOrModMetadata) => {
+    const { t } = useTranslation('metadata');
     const nameComponent = <span className="title">{name}</span>;
 
     const authorComponent = author ? (
         <>
             {' '}
-            <span className="darker">by</span> {author}
+            <span className="darker">{t('plugins.by')}</span> {author}
         </>
     ) : null;
 

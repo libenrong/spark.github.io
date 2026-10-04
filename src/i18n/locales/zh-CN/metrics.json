@@ -1,0 +1,40 @@
+{
+    "heading": "指标",
+    "description": "本区域展示与应用性能及资源使用相关的各项指标。",
+    "range": {
+        "5": "最近 5 分钟",
+        "15": "最近 15 分钟",
+        "30": "最近 30 分钟",
+        "60": "最近 1 小时"
+    },
+    "tooltip": "{{name}}：{{value}}",
+    "title": {
+        "cpu": "CPU",
+        "memory": "内存",
+        "tps": "TPS",
+        "mspt": "MSPT",
+        "world": "世界",
+        "playerPing": "玩家延迟"
+    },
+    "label": {
+        "heap": "堆",
+        "alloc": "分配"
+    },
+    "series": {
+        "process": "进程",
+        "system": "系统",
+        "used": "已用",
+        "max": "最大",
+        "committed": "已提交",
+        "bytesPerSec": "字节/秒",
+        "min": "最小",
+        "pct95": "95 分位",
+        "tps": "TPS",
+        "mean": "平均值",
+        "median": "中位数",
+        "players": "玩家",
+        "entities": "实体",
+        "tileEntities": "方块实体",
+        "chunks": "区块"
+    }
+}

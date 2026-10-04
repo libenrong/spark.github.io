@@ -1,0 +1,229 @@
+{
+    "title": {
+        "profile": "Profile",
+        "memoryProfile": "Memory Profile",
+        "document": "{{title}} @ {{time}} {{date}} | spark",
+        "heading": "{{user}} @ {{time}} {{date}}, interval {{interval}}{{ticksOver}}",
+        "comment": "\"{{comment}}\"",
+        "ticksOver": ", ticks >= {{n}}ms"
+    },
+    "controls": {
+        "flame": "View the profile as a Flame Graph",
+        "exitFlame": "Exit the Flame Graph view",
+        "settings": "Click to show the settings menu",
+        "ai": "Analyze this profile with AI",
+        "refine": "View the refine graph",
+        "toggleView": "Toggle the view",
+        "search": "Search…"
+    },
+    "views": {
+        "all": "all",
+        "flat": "flat",
+        "mods": "mods",
+        "plugins": "plugins"
+    },
+    "contextMenu": {
+        "viewFlame": "View as Flame Graph",
+        "toggleBookmark": "Toggle bookmark",
+        "clearBookmarks": "Clear all bookmarks"
+    },
+    "settings": {
+        "nameLabel": "{{name}}:",
+        "mappings": {
+            "name": "Mappings",
+            "desc": "Select which deobfuscation mappings the viewer should use when displaying profiler frames.",
+            "title": "mappings",
+            "none": "None",
+            "autoDetect": "Auto Detect",
+            "noMappings": "No Mappings"
+        },
+        "infoPoints": {
+            "name": "Info Points",
+            "desc": "Select whether info points should be shown."
+        }
+    },
+    "ai": {
+        "title": "AI Analysis",
+        "provider": "Provider",
+        "requestMode": "Request mode",
+        "modeDirect": "Direct (browser)",
+        "modeProxy": "Via site proxy",
+        "baseUrl": "API base URL",
+        "model": "Model",
+        "apiKey": "API key",
+        "apiKeyPlaceholder": "sk-…",
+        "keyNote": "The API key is only stored in this browser (localStorage) and is only sent to the endpoint configured above.",
+        "run": "Analyze",
+        "rerun": "Analyze again",
+        "running": "Analyzing…",
+        "stop": "Stop",
+        "copy": "Copy",
+        "copied": "Copied!",
+        "thinking": "Waiting for the model to respond…",
+        "placeholder": "Configure your API key above, then click Analyze to get hotspot analysis and optimization suggestions for this profile.",
+        "errorConfig": "Please fill in the API base URL, model and API key first.",
+        "emptyResponse": "Connected, but the model returned no content. Check the model name and API base URL.",
+        "reasonerOnly": "The model only returned reasoning and no answer text (possibly hit the max_tokens limit). Try deepseek-chat, or raise max_tokens / shorten the input.",
+        "rawLabel": "Show raw response",
+        "directFailed": "Could not reach the endpoint directly ({{message}}). This is often a CORS restriction - try switching to \"Via site proxy\".",
+        "error": "Analysis failed: {{message}}",
+        "sections": {
+            "conclusion": "Overall conclusion",
+            "abnormal": "Abnormal metrics",
+            "gc": "Garbage collection",
+            "diagnosis": "Diagnosis",
+            "hotspots": "Hotspot methods",
+            "steps": "Recommended steps"
+        },
+        "status": {
+            "ok": "Normal",
+            "warn": "Warning",
+            "bad": "Critical"
+        },
+        "metrics": {
+            "tps": "TPS",
+            "mspt": "MSPT",
+            "heap": "Heap memory",
+            "cpu": "CPU",
+            "ping": "Ping"
+        },
+        "metricNotes": {
+            "tps": "Server ticks per second",
+            "mspt": "Time per server tick",
+            "heap": "Java heap usage",
+            "cpu": "CPU load",
+            "ping": "Connection latency",
+            "gc": "Garbage collection pauses"
+        },
+        "gc": {
+            "collections": "collections",
+            "avgPause": "Avg pause",
+            "avgInterval": "Avg interval"
+        },
+        "tokens": {
+            "inputNoCache": "Uncached input",
+            "inputCached": "Cached input",
+            "output": "Output",
+            "total": "Total",
+            "hitRate": "Cache hit rate"
+        },
+        "hotspots": {
+            "internal": "Internal"
+        },
+        "valueLabels": {
+            "1m": "1m",
+            "5m": "5m",
+            "15m": "15m",
+            "target": "target",
+            "mean": "mean",
+            "p95": "p95",
+            "max": "max",
+            "used": "used",
+            "pct": "pct",
+            "process": "process",
+            "median": "median"
+        },
+        "time": {
+            "h": "h",
+            "m": "m",
+            "s": "s"
+        }
+    },
+    "noData": {
+        "title": "No Data",
+        "pending": "This profile doesn't contain any data yet! The viewer will refresh shortly.",
+        "empty": "This profile doesn't contain any data!"
+    },
+    "socket": {
+        "connected": "<b>Connected</b> via WebSocket",
+        "description": "spark viewer is connected to the spark profiler using a socket connection.<br/>The statistics will update every {{interval}} seconds, and the profiler data will update every minute.",
+        "latency": "<b>Latency</b>: {{value}}ms",
+        "clientId": "<b>Client ID</b>: {{id}}"
+    },
+    "headers": {
+        "all": {
+            "title": "Profiler - All View",
+            "desc": "This is the default profiler view. It shows the entire profile as an expandable tree."
+        },
+        "flat": {
+            "title": "Profiler - Flat View",
+            "desc": "This view shows a flattened representation of the profile, where the top 250 method calls are listed."
+        },
+        "sources": {
+            "title": "Profiler - {{noun}} View",
+            "desc": "This view shows a filtered representation of the profile broken down by {{noun}}."
+        }
+    },
+    "noun": {
+        "mod": "mod",
+        "mods": "Mods",
+        "plugin": "plugin",
+        "plugins": "Plugins"
+    },
+    "sources": {
+        "other": "Other",
+        "otherDesc": "The following other {{noun}} are installed, but didn't show up in this profile. Yay!"
+    },
+    "buttons": {
+        "titleLabel": "{{title}}:",
+        "display": {
+            "title": "Display",
+            "bottomUp": "Bottom Up",
+            "topDown": "Top Down",
+            "bottomUpDesc": "The call tree is reversed - expanding a node reveals the method that called it.",
+            "topDownDesc": "The call tree is 'normal' - expanding a node reveals the sub-methods that it calls."
+        },
+        "labelMode": {
+            "title": "Label",
+            "bytesPerSecond": "Bytes per second",
+            "percentage": "Percentage",
+            "timePerTick": "Time per tick",
+            "bytesPerSecondDesc": "The value displayed is the number of bytes of memory allocated per second on average (memory pressure) by each frame.",
+            "percentageBytesDesc": "The value displayed is number of bytes of memory allocated by each frame divided by the total allocated as a percentage.",
+            "timePerTickDesc": "The value displayed against each frame is the average time in milliseconds spent executing the method each tick.",
+            "percentageTimeDesc": "The value displayed against each frame is the time divided by the total time as a percentage."
+        },
+        "mergeMode": {
+            "title": "Merge Mode",
+            "merge": "Merge",
+            "separate": "Separate",
+            "mergeDesc": "Method calls with the same signature will be merged together, even though they may not have been invoked by the same calling method.",
+            "separateDesc": "Method calls that have the same signature, but that haven't been invoked by the same calling method will show separately."
+        },
+        "sortMode": {
+            "title": "Sort Mode",
+            "selfBytes": "Self bytes allocated",
+            "totalBytes": "Total bytes allocated",
+            "selfTime": "Self Time",
+            "totalTime": "Total Time",
+            "selfBytesDesc": "Methods are sorted according to the number of bytes of memory allocated directly within the method",
+            "totalBytesDesc": "Methods are sorted according to the number of bytes of memory allocated directly within the method as well as allocations in sub-calls",
+            "selfTimeDesc": "Methods are sorted according to their 'self time' (the time spent executing code within the method)",
+            "totalTimeDesc": "Methods are sorted according to their 'total time' (the time spent executing code within the method and the time spent executing sub-calls)"
+        }
+    },
+    "tree": {
+        "self": " (self: {{value}} - {{pct}})",
+        "lineTitle": "Invoked on line {{n}} of {{class}}.{{method}}()"
+    },
+    "native": " (native)",
+    "flame": {
+        "tooltip": "{{method}} - {{value}}"
+    },
+    "refine": {
+        "title": "Refine",
+        "description": "The graph below shows some key metrics over the course of the profile. You can drag + select with your cursor to refine the profile to a specific time period.",
+        "tooltip": "{{axisLabel}}: {{value}}",
+        "minute": "{{n}}m",
+        "axis": {
+            "tps": "TPS",
+            "msptMedian": "MSPT",
+            "cpuProcess": "CPU (process)",
+            "cpuSystem": "CPU (system)",
+            "players": "Players",
+            "entities": "Entities",
+            "tileEntities": "Tile Entities",
+            "chunks": "Chunks"
+        }
+    }
+}

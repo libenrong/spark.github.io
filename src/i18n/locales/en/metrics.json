@@ -1,0 +1,40 @@
+{
+    "heading": "Metrics",
+    "description": "This section displays various metrics related to the application performance and resource usage.",
+    "range": {
+        "5": "Last 5 minutes",
+        "15": "Last 15 minutes",
+        "30": "Last 30 minutes",
+        "60": "Last 1 hour"
+    },
+    "tooltip": "{{name}}: {{value}}",
+    "title": {
+        "cpu": "CPU",
+        "memory": "Memory",
+        "tps": "TPS",
+        "mspt": "MSPT",
+        "world": "World",
+        "playerPing": "Player Ping"
+    },
+    "label": {
+        "heap": "heap",
+        "alloc": "alloc"
+    },
+    "series": {
+        "process": "Process",
+        "system": "System",
+        "used": "Used",
+        "max": "Max",
+        "committed": "Committed",
+        "bytesPerSec": "Bytes/sec",
+        "min": "Min",
+        "pct95": "95%ile",
+        "tps": "TPS",
+        "mean": "Mean",
+        "median": "Median",
+        "players": "Players",
+        "entities": "Entities",
+        "tileEntities": "Tile Entities",
+        "chunks": "Chunks"
+    }
+}

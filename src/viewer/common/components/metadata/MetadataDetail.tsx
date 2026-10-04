@@ -1,6 +1,7 @@
 import { faInfoCircle } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useMemo, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { SparkMetadata } from '../../../proto/guards';
 import { PlatformMetadata_Type } from '../../../proto/spark_pb';
 import {
@@ -23,6 +24,7 @@ interface MetadataDetailProps {
 }
 
 export default function MetadataDetail({ metadata }: MetadataDetailProps) {
+    const { t } = useTranslation('metadata');
     const {
         platform,
         platformStatistics,
@@ -65,21 +67,21 @@ export default function MetadataDetail({ metadata }: MetadataDetailProps) {
     const { runningTime, numberOfTicks, numberOfIncludedTicks, samplerEngine } =
         unwrapSamplerMetadata(metadata);
 
-    const [view, setView] = useState('Platform');
+    const [view, setView] = useState('platform');
     const views: Record<string, () => boolean> = {
-        'Platform': () => true,
-        'Memory': () =>
+        platform: () => true,
+        memory: () =>
             !!platformStatistics?.memory?.heap ||
             !!platformStatistics?.memory?.pools?.length,
-        'Network': () => !!Object.keys(systemStatistics?.net ?? {}).length,
-        'JVM Flags': () => !!systemStatistics?.java?.vmArgs,
-        'Configurations': () => !!parsedConfigurations,
-        'World': () =>
+        network: () => !!Object.keys(systemStatistics?.net ?? {}).length,
+        jvmArgs: () => !!systemStatistics?.java?.vmArgs,
+        configurations: () => !!parsedConfigurations,
+        world: () =>
             !!platformStatistics?.world &&
             !!platformStatistics?.world?.totalEntities,
-        'Misc': () => !!parsedExtraMetadata,
-        'Game Rules': () => !!platformStatistics?.world?.gameRules.length,
-        'Plugins/Mods': () =>
+        misc: () => !!parsedExtraMetadata,
+        gameRules: () => !!platformStatistics?.world?.gameRules.length,
+        plugins: () =>
             !!platformStatistics?.world?.dataPacks.length ||
             !!Object.keys(metadata.sources).length,
     };
@@ -88,13 +90,9 @@ export default function MetadataDetail({ metadata }: MetadataDetailProps) {
         <div className="metadata-detail">
             <div className="header">
                 <h2>
-                    <FontAwesomeIcon icon={faInfoCircle} /> Metadata
+                    <FontAwesomeIcon icon={faInfoCircle} /> {t('heading')}
                 </h2>
-                <p>
-                    The panel below shows metadata/information about the
-                    platform, system, and world. You can switch between
-                    different views using the buttons below.
-                </p>
+                <p>{t('description')}</p>
             </div>
 
             <div className="metadata-detail-controls">
@@ -109,7 +107,7 @@ export default function MetadataDetail({ metadata }: MetadataDetailProps) {
                                     (view === name ? ' toggled' : '')
                                 }
                             >
-                                {name}
+                                {t(`tabs.${name}`)}
                             </div>
                         )
                     );
@@ -117,7 +115,7 @@ export default function MetadataDetail({ metadata }: MetadataDetailProps) {
             </div>
 
             <div className="metadata-detail-content textbox">
-                {view === 'Platform' ? (
+                {view === 'platform' ? (
                     <PlatformStatistics
                         platform={platform!}
                         platformStatistics={platformStatistics!}
@@ -129,36 +127,36 @@ export default function MetadataDetail({ metadata }: MetadataDetailProps) {
                         numberOfIncludedTicks={numberOfIncludedTicks}
                         engine={samplerEngine}
                     />
-                ) : view === 'Memory' ? (
+                ) : view === 'memory' ? (
                     <MemoryStatistics
                         memory={platformStatistics?.memory!}
                         gc={platformStatistics?.gc!}
                     />
-                ) : view === 'Network' ? (
+                ) : view === 'network' ? (
                     <NetworkStatistics systemStatistics={systemStatistics!} />
-                ) : view === 'JVM Flags' ? (
+                ) : view === 'jvmArgs' ? (
                     <JvmStartupArgs systemStatistics={systemStatistics!} />
-                ) : view === 'Configurations' ? (
+                ) : view === 'configurations' ? (
                     <ServerConfigurations
                         parsedConfigurations={parsedConfigurations!}
                     />
-                ) : view === 'World' ? (
+                ) : view === 'world' ? (
                     <WorldStatistics
                         worldStatistics={platformStatistics!.world!}
                     />
-                ) : view === 'Game Rules' ? (
+                ) : view === 'gameRules' ? (
                     <GameRules
                         gameRules={platformStatistics?.world?.gameRules!}
                     />
-                ) : view === 'Plugins/Mods' ? (
+                ) : view === 'plugins' ? (
                     <PluginsModsList
                         plugins={Object.values(metadata.sources || {})}
                         dataPacks={platformStatistics?.world?.dataPacks || []}
                     />
-                ) : view === 'Misc' ? (
+                ) : view === 'misc' ? (
                     <ExtraPlatformMetadata data={parsedExtraMetadata!} />
                 ) : (
-                    <p>Unknown view.</p>
+                    <p>{t('unknownView')}</p>
                 )}
             </div>
         </div>

@@ -1,6 +1,8 @@
 // @ts-ignore
 import { FlameGraph } from '@lucko/react-flame-graph';
 import { useMemo, useRef } from 'react';
+import { useTranslation } from 'react-i18next';
+import i18next from '../../../../i18n';
 import useContainerWidth from '../../../common/hooks/useContainerWidth';
 import { formatBytesShort } from '../../../common/util/format';
 import {
@@ -24,6 +26,7 @@ export default function Flame({
     metadata,
     timeSelector,
 }: FlameProps) {
+    const { i18n } = useTranslation('sampler');
     const getTimeFunction = timeSelector.getTime;
     const containerRef = useRef<HTMLDivElement>(null);
     const width = useContainerWidth(containerRef);
@@ -33,7 +36,7 @@ export default function Flame({
 
     const [data, depth] = useMemo(
         () => toFlameNode(flameData, mappings, getTimeFunction, isAlloc),
-        [flameData, mappings, getTimeFunction, isAlloc]
+        [flameData, mappings, getTimeFunction, isAlloc, i18n.language]
     );
     const calcHeight = Math.min(depth * 20, 5000);
 
@@ -74,7 +77,7 @@ function toFlameNode(
         let resolved = mappings.resolve(details);
 
         if (resolved.type === 'native') {
-            name = details.methodName + ' (native)';
+            name = details.methodName + i18next.t('sampler:native');
         } else {
             let { className, methodName, packageName } = resolved;
 
@@ -92,7 +95,10 @@ function toFlameNode(
                 ? formatBytesShort(node.getTime())
                 : `${node.getTime()}ms`;
 
-            tooltip = `${details.className}.${details.methodName}() - ${formattedValue}`;
+            tooltip = i18next.t('sampler:flame.tooltip', {
+                method: `${details.className}.${details.methodName}()`,
+                value: formattedValue,
+            });
         }
     } else {
         throw new Error('unknown type: ' + (details as any).type);

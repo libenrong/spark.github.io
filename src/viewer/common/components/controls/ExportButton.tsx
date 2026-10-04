@@ -1,4 +1,5 @@
 import { faFileExport } from '@fortawesome/free-solid-svg-icons';
+import { useTranslation } from 'react-i18next';
 import FaButton from '../../../../components/FaButton';
 import { ExportCallback } from '../../logic/export';
 
@@ -7,6 +8,7 @@ export interface ExportButtonProps {
 }
 
 export default function ExportButton({ exportCallback }: ExportButtonProps) {
+    const { t } = useTranslation('common');
     if (!exportCallback) {
         return null;
     }
@@ -14,7 +16,7 @@ export default function ExportButton({ exportCallback }: ExportButtonProps) {
         <FaButton
             icon={faFileExport}
             onClick={exportCallback}
-            title="Export this profile to a local file"
+            title={t('viewer.controls.export')}
         />
     );
 }

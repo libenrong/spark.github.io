@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next';
 import VirtualNode from '../../node/VirtualNode';
 
 export interface LineNumberProps {
@@ -6,6 +7,8 @@ export interface LineNumberProps {
 }
 
 export default function LineNumber({ node, parent }: LineNumberProps) {
+    const { t } = useTranslation('sampler');
+
     if (!parent) return null;
 
     const details = node.getDetails();
@@ -14,14 +17,11 @@ export default function LineNumber({ node, parent }: LineNumberProps) {
     const parentDetails = parent.getDetails();
     if (parentDetails.type !== 'stackTrace') return null;
 
-    const title =
-        'Invoked on line ' +
-        details.parentLineNumber +
-        ' of ' +
-        parentDetails.className +
-        '.' +
-        parentDetails.methodName +
-        '()';
+    const title = t('tree.lineTitle', {
+        n: details.parentLineNumber,
+        class: parentDetails.className,
+        method: parentDetails.methodName,
+    });
     return (
         <span className="lineNumber" title={title}>
             :{details.parentLineNumber}

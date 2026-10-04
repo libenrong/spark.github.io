@@ -1,0 +1,85 @@
+{
+    "language": {
+        "toggle": "切换语言（当前：{{current}}）",
+        "label": "语言"
+    },
+    "theme": {
+        "darkMode": "深色模式",
+        "lightMode": "浅色模式",
+        "toggle": "切换深色/浅色模式（当前：{{theme}}）"
+    },
+    "header": {
+        "defaultTitle": "spark",
+        "tagline": "适用于 Minecraft 客户端、服务端与代理端的性能分析器。"
+    },
+    "meta": {
+        "title": "spark",
+        "titleDownloads": "spark | 下载",
+        "titleChangelog": "spark | 更新日志",
+        "description": "spark 是适用于 Minecraft 客户端、服务端与代理端的性能分析器。"
+    },
+    "footer": {
+        "openSource": "<spark>spark</spark> 与 <viewer>spark-viewer</viewer> 均在 GitHub 上自由开源。<br/>版权所有 © 2018-{{year}} <lucko>lucko</lucko> 及其他 spark <contributors>贡献者</contributors>。"
+    },
+    "filePicker": {
+        "prompt": "将 profile/heap 文件拖放到此处，或点击选择",
+        "accepted": "（仅支持 <code>.sparkprofile</code> 或 <code>.sparkheap</code> 文件）"
+    },
+    "error": {
+        "notFound": "404 - 页面不存在",
+        "serverError": "500 - 发生服务端错误",
+        "serverErrorWithCode": "服务端错误 {{statusCode}}",
+        "clientError": "哎呀，spark-viewer 客户端发生了意外错误。"
+    },
+    "loading": "加载中…",
+    "units": {
+        "invalid": "无效",
+        "bytes": "字节",
+        "zeroBytes": "0 字节",
+        "zeroShort": "0B",
+        "h": "小时",
+        "m": "分",
+        "s": "秒"
+    },
+    "onlineMode": {
+        "online": "在线模式",
+        "offline": "离线模式",
+        "onlineBungee": "在线模式 (BungeeCord)",
+        "offlineBungee": "离线模式 (BungeeCord)",
+        "onlineVelocity": "在线模式 (Velocity)",
+        "offlineVelocity": "离线模式 (Velocity)"
+    },
+    "viewer": {
+        "loadingFile": "正在加载文件…",
+        "downloading": "正在下载…",
+        "loadFailed": "无法加载数据。数据可能已过期，或者你使用的版本过旧？",
+        "unknownState": "未知状态 - 这是一个 Bug。",
+        "warning": "警告",
+        "versionWarningTitle": " 此分析报告由旧版本的 spark 生成！ ",
+        "versionWarningBody": "部分查看器功能将无法使用，建议升级到新版本的 spark。",
+        "controls": {
+            "toggleWidgets": "点击切换小组件",
+            "toggleMetadata": "点击切换详细元数据面板",
+            "toggleMetrics": "点击切换指标面板",
+            "export": "将此分析导出为本地文件"
+        }
+    },
+    "thumbnail": {
+        "unknown": "未知",
+        "unknownVersion": "未知",
+        "profile": "性能分析报告",
+        "heapSummary": "堆内存摘要",
+        "healthReport": "健康报告",
+        "allocProfile": "<span>分配</span>（内存）分析报告",
+        "playersOnline": "<span>{{count}}</span> 名玩家在线",
+        "duration": "时长 <span>{{duration}}</span>",
+        "ticks": "（<span>{{count}}</span> 个 tick）",
+        "uploadedBy": "由 <avatar></avatar>{{name}} 上传",
+        "at": "• {{date}} {{time}}",
+        "platformType": {
+            "server": "服务端",
+            "client": "客户端",
+            "proxy": "代理端"
+        }
+    }
+}

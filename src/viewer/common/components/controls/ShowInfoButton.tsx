@@ -3,6 +3,7 @@ import {
     faGauge,
     faInfoCircle,
 } from '@fortawesome/free-solid-svg-icons';
+import { useTranslation } from 'react-i18next';
 import FaButton from '../../../../components/FaButton';
 import { SparkMetadata } from '../../../proto/guards';
 import { MetadataToggle } from '../../hooks/useMetadataToggle';
@@ -16,6 +17,7 @@ export default function ShowInfoButton({
     metadata,
     metadataToggle,
 }: ShowInfoButtonProps) {
+    const { t } = useTranslation('common');
     if (!metadata.platform) {
         return null;
     }
@@ -25,7 +27,7 @@ export default function ShowInfoButton({
             <FaButton
                 icon={faGauge}
                 onClick={metadataToggle.toggleWidgets}
-                title="Click to toggle the widgets"
+                title={t('viewer.controls.toggleWidgets')}
                 extraClassName={
                     metadataToggle.showWidgets ? 'toggled' : undefined
                 }
@@ -33,14 +35,14 @@ export default function ShowInfoButton({
             <FaButton
                 icon={faInfoCircle}
                 onClick={metadataToggle.toggleInfo}
-                title="Click to toggle the detailed metadata display"
+                title={t('viewer.controls.toggleMetadata')}
                 extraClassName={metadataToggle.showInfo ? 'toggled' : undefined}
             />
             {!!metadata.metrics && (
                 <FaButton
                     icon={faChartLine}
                     onClick={metadataToggle.toggleMetrics}
-                    title="Click to toggle the metrics dashboard"
+                    title={t('viewer.controls.toggleMetrics')}
                     extraClassName={
                         metadataToggle.showMetrics ? 'toggled' : undefined
                     }

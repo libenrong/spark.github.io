@@ -1,3 +1,4 @@
+import i18n from '../../../../i18n';
 import useContextWithOverride from '../../hooks/useContextWithOverride';
 import { Formatter, WidgetFormatter } from './format';
 
@@ -19,7 +20,7 @@ export default function WidgetSingleValue({
 
     const percent = (value / total) * 100;
     const formattedPercent = percent
-        ? percent.toLocaleString('en-US', {
+        ? percent.toLocaleString(i18n.language, {
               maximumFractionDigits: 2,
           }) + '%'
         : '';

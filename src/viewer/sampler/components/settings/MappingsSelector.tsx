@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next';
 import { MappingsMetadata } from '../../mappings/fetch';
 
 export interface MappingsSelectorProps {
@@ -11,13 +12,15 @@ export default function MappingsSelector({
     mappings,
     setMappings,
 }: MappingsSelectorProps) {
+    const { t } = useTranslation('sampler');
+
     let groups: MappingsSelectorGroup[] = [
         {
             id: 'none',
-            label: 'None',
+            label: t('settings.mappings.none'),
             options: [
-                { id: 'auto', label: 'Auto Detect' },
-                { id: 'none', label: 'No Mappings' },
+                { id: 'auto', label: t('settings.mappings.autoDetect') },
+                { id: 'none', label: t('settings.mappings.noMappings') },
             ],
         },
     ];
@@ -37,7 +40,7 @@ export default function MappingsSelector({
     return (
         <span className="dropdown" id="mappings-selector">
             <select
-                title="mappings"
+                title={t('settings.mappings.title')}
                 value={mappings}
                 onChange={e => setMappings(e.target.value)}
             >

@@ -1,5 +1,6 @@
 import { faWarning } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { useTranslation } from 'react-i18next';
 import TextBox from '../../../../components/TextBox';
 
 import styles from '../../../../style/sampler.module.scss';
@@ -9,19 +10,16 @@ export interface NoDataProps {
 }
 
 export default function NoData({ isConnectedToSocket }: NoDataProps) {
+    const { t } = useTranslation('sampler');
+
     return (
         <TextBox extraClassName={styles['no-data']}>
             <h2>
-                <FontAwesomeIcon icon={faWarning} /> <b>No Data</b>
+                <FontAwesomeIcon icon={faWarning} /> <b>{t('noData.title')}</b>
             </h2>
-            {isConnectedToSocket ? (
-                <p>
-                    This profile doesn&apos;t contain any data yet! The viewer
-                    will refresh shortly.
-                </p>
-            ) : (
-                <p>This profile doesn&apos;t contain any data!</p>
-            )}
+            <p>
+                {isConnectedToSocket ? t('noData.pending') : t('noData.empty')}
+            </p>
         </TextBox>
     );
 }

@@ -1,6 +1,7 @@
 import { faCogs } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Dispatch, ReactNode, SetStateAction } from 'react';
+import { useTranslation } from 'react-i18next';
 
 export interface ButtonProps {
     value: boolean;
@@ -19,6 +20,8 @@ export default function Button({
     labelFalse,
     children,
 }: ButtonProps) {
+    const { t } = useTranslation('sampler');
+
     function onClick() {
         setValue(!value);
     }
@@ -26,7 +29,8 @@ export default function Button({
     return (
         <div className="button">
             <button onClick={onClick}>
-                <FontAwesomeIcon icon={faCogs} /> <span>{title}:</span>{' '}
+                <FontAwesomeIcon icon={faCogs} />{' '}
+                <span>{t('buttons.titleLabel', { title })}</span>{' '}
                 {value ? labelTrue : labelFalse}
             </button>
             {value ? children[0] : children[1]}

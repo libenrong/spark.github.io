@@ -3,6 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import TextBox from '../../../../components/TextBox';
 
 import { ReactNode } from 'react';
+import { useTranslation } from 'react-i18next';
 import styles from '../../../../style/sampler.module.scss';
 import Switch from '../../../common/components/Switch';
 import { MappingsMetadata } from '../../mappings/fetch';
@@ -23,13 +24,14 @@ export default function SettingsMenu({
     infoPoints,
     toggleInfoPoints,
 }: SettingsMenuProps) {
+    const { t } = useTranslation('sampler');
+
     return (
         <TextBox extraClassName={styles['settings-menu']}>
             {mappingsMetadata && (
                 <Setting
-                    name="Mappings"
-                    desc="Select which deobfuscation mappings the viewer should
-                        use when displaying profiler frames."
+                    name={t('settings.mappings.name')}
+                    desc={t('settings.mappings.desc')}
                 >
                     <MappingsSelector
                         mappingsMetadata={mappingsMetadata}
@@ -39,8 +41,8 @@ export default function SettingsMenu({
                 </Setting>
             )}
             <Setting
-                name="Info Points"
-                desc="Select whether info points should be shown."
+                name={t('settings.infoPoints.name')}
+                desc={t('settings.infoPoints.desc')}
             >
                 <Switch value={infoPoints} toggle={toggleInfoPoints} />
             </Setting>
@@ -55,11 +57,13 @@ interface SettingProps {
 }
 
 const Setting = ({ name, desc, children }: SettingProps) => {
+    const { t } = useTranslation('sampler');
+
     return (
         <div className="setting">
             <div className="setting-control">
-                <FontAwesomeIcon icon={faSliders} /> <span>{name}:</span>{' '}
-                {children}
+                <FontAwesomeIcon icon={faSliders} />{' '}
+                <span>{t('settings.nameLabel', { name })}</span> {children}
             </div>
             <p>{desc}</p>
         </div>

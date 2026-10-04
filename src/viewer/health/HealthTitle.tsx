@@ -1,4 +1,5 @@
 import Head from 'next/head';
+import { Trans, useTranslation } from 'react-i18next';
 import Avatar from '../common/components/Avatar';
 import { formatDate } from '../common/util/format';
 import { HealthMetadata } from '../proto/spark_pb';
@@ -8,6 +9,7 @@ export interface HealthTitleProps {
 }
 
 export default function HealthTitle({ metadata }: HealthTitleProps) {
+    const { t } = useTranslation('health');
     const { user, generatedTime } = metadata;
 
     const [timeStr, dateStr] = formatDate(generatedTime);
@@ -15,14 +17,20 @@ export default function HealthTitle({ metadata }: HealthTitleProps) {
     return (
         <div className="textbox title">
             <Head>
-                <title>
-                    Health Report @ {timeStr} {dateStr} | spark
-                </title>
+                <title>{t('title', { time: timeStr, date: dateStr })}</title>
             </Head>
             <span>
-                Health Report created by{' '}
-                <Avatar user={user} platform={metadata.platform} />
-                {user?.name} @ {timeStr} {dateStr}
+                <Trans
+                    ns="health"
+                    i18nKey="createdBy"
+                    values={{ user: user?.name ?? '' }}
+                    components={{
+                        avatar: (
+                            <Avatar user={user} platform={metadata.platform} />
+                        ),
+                    }}
+                />
+                {t('at', { time: timeStr, date: dateStr })}
             </span>
         </div>
     );

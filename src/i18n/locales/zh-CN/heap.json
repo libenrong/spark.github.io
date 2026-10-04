@@ -1,0 +1,12 @@
+{
+    "title": "堆内存摘要{{at}} | spark",
+    "at": " @ {{time}} {{date}}",
+    "createdBy": "堆内存摘要，由 <avatar></avatar>{{user}} 创建",
+    "table": {
+        "rank": "排名",
+        "instances": "实例数",
+        "size": "大小",
+        "type": "类型"
+    },
+    "searchPlaceholder": "按类型搜索"
+}

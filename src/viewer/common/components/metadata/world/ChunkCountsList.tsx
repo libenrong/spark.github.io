@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next';
 import { Tooltip } from 'react-tooltip';
 import { WorldStatistics_Chunk } from '../../../../proto/spark_pb';
 
@@ -6,6 +7,7 @@ export interface ChunkCountsListProps {
 }
 
 export default function ChunkCountsList({ chunks }: ChunkCountsListProps) {
+    const { t } = useTranslation('metadata');
     const chunksToDisplay = chunks.slice(0, 10);
     const more = chunks.length - 10;
 
@@ -20,13 +22,12 @@ export default function ChunkCountsList({ chunks }: ChunkCountsListProps) {
                         >
                             {chunk.x}, {chunk.z}
                         </span>{' '}
-                        ({chunk.totalEntities}{' '}
-                        {chunk.totalEntities === 1 ? 'entity' : 'entities'})
+                        {t('world.chunkEntity', { count: chunk.totalEntities })}
                     </li>
                 ))}
                 {more > 0 && (
                     <li style={{ listStyleType: 'none' }}>
-                        ... and {more} more
+                        {t('world.more', { n: more })}
                     </li>
                 )}
             </ul>

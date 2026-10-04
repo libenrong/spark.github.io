@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next';
 import { SystemStatistics_Disk } from '../../../../proto/spark_pb';
 import { formatBytes } from '../../../util/format';
 import { Formatter, WidgetFormat } from '../format';
@@ -9,6 +10,7 @@ export interface DiskWidgetProps {
 }
 
 export default function DiskWidget({ disk }: DiskWidgetProps) {
+    const { t } = useTranslation('widgets');
     const formatter: Formatter = {
         color: (value, total) => {
             const percent = value / total;
@@ -26,7 +28,7 @@ export default function DiskWidget({ disk }: DiskWidgetProps) {
     };
 
     return (
-        <Widget title="Disk" formatter={formatter}>
+        <Widget id="disk" title={t('title.disk')} formatter={formatter}>
             <WidgetSingleValue value={disk.used} total={disk.total} />
         </Widget>
     );

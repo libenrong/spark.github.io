@@ -1,11 +1,13 @@
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import TextBox from '../../../components/TextBox';
 
 import styles from '../../../style/sampler.module.scss';
 
 export default function VersionWarning() {
+    const { t } = useTranslation('common');
     const [show, setShow] = useState(true);
 
     if (!show) {
@@ -17,19 +19,18 @@ export default function VersionWarning() {
     }
 
     const warning = (
-        <span role="img" aria-label="warning">
+        <span role="img" aria-label={t('viewer.warning')}>
             ⚠️
         </span>
     );
     return (
         <TextBox extraClassName={styles['version-warning']}>
             {warning}
-            <b> This profile was created using an old version of spark! </b>
+            <b>{t('viewer.versionWarningTitle')}</b>
             {warning}
             <FontAwesomeIcon icon={faTimes} onClick={onClick} />
             <br />
-            Some viewer features cannot be supported. Please consider updating
-            to a newer version.
+            {t('viewer.versionWarningBody')}
         </TextBox>
     );
 }

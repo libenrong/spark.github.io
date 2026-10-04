@@ -1,0 +1,12 @@
+{
+    "title": "健康报告 @ {{time}} {{date}} | spark",
+    "createdBy": "健康报告，由 <avatar></avatar>{{user}} 创建",
+    "at": " @ {{time}} {{date}}",
+    "socket": {
+        "connected": "通过 WebSocket <b>已连接</b>",
+        "description": "spark viewer 通过 socket 连接与 spark 相连。",
+        "statisticsInterval": "统计数据每 {{n}} 秒更新一次。",
+        "latency": "<b>延迟</b>：{{n}}ms",
+        "clientId": "<b>客户端 ID</b>：{{id}}"
+    }
+}

@@ -65,28 +65,28 @@ export function objectMap<K extends string | number | symbol, V1, V2>(
     ) as Record<K, V2>;
 }
 
-type ProxyKind = 'BungeeCord' | 'Velocity';
+type ProxyKind = 'Bungee' | 'Velocity';
 export type OnlineModeStatus =
-    | 'online mode'
-    | 'offline mode'
-    | `online mode (${ProxyKind})`
-    | `offline mode (${ProxyKind})`;
+    | 'online'
+    | 'offline'
+    | `online${ProxyKind}`
+    | `offline${ProxyKind}`;
 
 export function detectOnlineMode(
     onlineMode: PlatformStatistics_OnlineMode | undefined,
     parsedConfigurations: Record<string, any> | undefined
 ): OnlineModeStatus | undefined {
     if (onlineMode === PlatformStatistics_OnlineMode.ONLINE) {
-        return 'online mode';
+        return 'online';
     }
     if (onlineMode === PlatformStatistics_OnlineMode.OFFLINE) {
-        return 'offline mode';
+        return 'offline';
     }
 
     if (parsedConfigurations) {
         const serverProperties = parsedConfigurations['server.properties'];
         if (serverProperties?.['online-mode'] === true) {
-            return 'online mode';
+            return 'online';
         }
 
         const spigotConfig = parsedConfigurations['spigot.yml'];
@@ -101,10 +101,10 @@ export function detectOnlineMode(
                     'online-mode'
                 ] === false
             ) {
-                return 'offline mode (BungeeCord)';
+                return 'offlineBungee';
             }
 
-            return 'online mode (BungeeCord)';
+            return 'onlineBungee';
         }
 
         if (
@@ -119,10 +119,10 @@ export function detectOnlineMode(
                 newPaperConfig?.['proxies']?.['velocity']?.['online-mode'] ===
                     false
             ) {
-                return 'offline mode (Velocity)';
+                return 'offlineVelocity';
             }
 
-            return 'online mode (Velocity)';
+            return 'onlineVelocity';
         }
     }
 

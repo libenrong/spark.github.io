@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next';
 import { WorldStatistics_World } from '../../../../proto/spark_pb';
 
 export interface WorldTotalEntitiesProps {
@@ -9,10 +10,12 @@ export default function WorldTotalEntities({
     totalEntities,
     worlds,
 }: WorldTotalEntitiesProps) {
+    const { t } = useTranslation('metadata');
     return (
         <>
             <p>
-                <b>Entities</b> (total): <span>{totalEntities}</span>
+                <b>{t('world.entitiesLabel')}</b>
+                {t('world.totalSuffix')} <span>{totalEntities}</span>
             </p>
             <ul>
                 {worlds

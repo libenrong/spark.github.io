@@ -1,6 +1,7 @@
 import { faLineChart } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import styles from '../../../../style/metrics.module.scss';
 import { Metrics as MetricsProto } from '../../../proto/spark_pb';
 import TimeRangeSelect from './TimeRangeSelect';
@@ -17,19 +18,17 @@ export interface MetricsProps {
 }
 
 export default function Metrics({ metrics }: MetricsProps) {
+    const { t } = useTranslation('metrics');
     const [timeRange, setTimeRange] = useState<number>(15);
 
     return (
         <div className={styles.metrics}>
             <div className="header">
                 <h2>
-                    <FontAwesomeIcon icon={faLineChart} /> Metrics
+                    <FontAwesomeIcon icon={faLineChart} /> {t('heading')}
                 </h2>
                 <div className="description">
-                    <p>
-                        This section displays various metrics related to the
-                        application performance and resource usage.
-                    </p>
+                    <p>{t('description')}</p>
                     <TimeRangeSelect
                         value={timeRange}
                         onChange={setTimeRange}

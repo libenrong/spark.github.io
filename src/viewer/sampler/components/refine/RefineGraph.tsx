@@ -1,6 +1,7 @@
 import { faRuler } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { WindowStatistics } from '../../../proto/spark_pb';
 import { TimeSelector } from '../../hooks/useTimeSelector';
 import RefineGraphChart from './RefineGraphChart';
@@ -18,6 +19,8 @@ export default function RefineGraph({
     timeSelector,
     windowStatistics,
 }: GraphProps) {
+    const { t } = useTranslation('sampler');
+
     // get an array of all window times
     const times = Array.from(timeSelector.times).sort();
 
@@ -86,13 +89,9 @@ export default function RefineGraph({
         <div className="graph">
             <div className="header">
                 <h2>
-                    <FontAwesomeIcon icon={faRuler} /> Refine
+                    <FontAwesomeIcon icon={faRuler} /> {t('refine.title')}
                 </h2>
-                <p>
-                    The graph below shows some key metrics over the course of
-                    the profile. You can drag + select with your cursor to
-                    refine the profile to a specific time period.
-                </p>
+                <p>{t('refine.description')}</p>
             </div>
 
             <RefineGraphChart

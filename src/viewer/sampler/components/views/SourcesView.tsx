@@ -1,4 +1,5 @@
 import { Dispatch, SetStateAction, useContext, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import TextBox from '../../../../components/TextBox';
 import SourceThreadVirtualNode from '../../node/SourceThreadVirtualNode';
 import SamplerData from '../../SamplerData';
@@ -24,6 +25,7 @@ export default function SourcesView({
     viewData,
     setLabelMode,
 }: SourcesViewProps) {
+    const { t } = useTranslation('sampler');
     const labelMode = useContext(LabelModeContext);
     const [merged, setMerged] = useState(true);
     const view = merged ? viewData?.sourcesMerged : viewData?.sourcesSeparate;
@@ -39,7 +41,7 @@ export default function SourcesView({
             </SourcesViewHeader>
             <hr />
             {!view ? (
-                <TextBox>Loading...</TextBox>
+                <TextBox>{t('common:loading')}</TextBox>
             ) : (
                 <>
                     {view.map(viewData => (
@@ -95,6 +97,7 @@ const SourceSection = ({ data, viewData }: SourceSectionProps) => {
 };
 
 const OtherSourcesSection = ({ alreadyShown }: { alreadyShown: string[] }) => {
+    const { t } = useTranslation('sampler');
     const metadata = useContext(MetadataContext)!;
     if (!metadata.sources) {
         return null;
@@ -111,16 +114,13 @@ const OtherSourcesSection = ({ alreadyShown }: { alreadyShown: string[] }) => {
     const sourceNoun = ['Fabric', 'Forge', 'NeoForge'].includes(
         metadata?.platform?.name!
     )
-        ? 'mods'
-        : 'plugins';
+        ? t('noun.mods')
+        : t('noun.plugins');
 
     return (
         <div className="other-sources">
-            <h2>Other</h2>
-            <p>
-                The following other {sourceNoun} are installed, but didn&apos;t
-                show up in this profile. Yay!
-            </p>
+            <h2>{t('sources.other')}</h2>
+            <p>{t('sources.otherDesc', { noun: sourceNoun })}</p>
             <ul>
                 {otherSources.map(({ name, version }) => (
                     <li key={name}>

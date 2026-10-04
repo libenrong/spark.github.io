@@ -7,6 +7,7 @@ import {
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import classNames from 'classnames';
 import { useEffect, useRef } from 'react';
+import { Trans, useTranslation } from 'react-i18next';
 import SparkLogo from '../../../assets/spark-logo.svg';
 import styles from '../../../style/thumbnail.module.scss';
 import { SparkMetadata } from '../../proto/guards';
@@ -27,6 +28,7 @@ export interface ThumbnailProps {
 }
 
 export default function Thumbnail({ metadata, code, type }: ThumbnailProps) {
+    const { t } = useTranslation('common');
     const ref = useRef<HTMLDivElement>(null);
 
     // override the css of body/#root to fix a specific size
@@ -50,14 +52,20 @@ export default function Thumbnail({ metadata, code, type }: ThumbnailProps) {
         platform = {
             minecraftVersion: '',
             sparkVersion: 0,
-            name: 'Unknown',
-            brand: 'Unknown',
-            version: 'unknown',
+            name: t('thumbnail.unknown'),
+            brand: t('thumbnail.unknown'),
+            version: t('thumbnail.unknownVersion'),
             type: 0,
         };
     }
 
     const platformType = PlatformMetadata_Type[platform.type].toLowerCase();
+
+    const contentTypeKey = {
+        'application/x-spark-sampler': 'profile',
+        'application/x-spark-heap': 'heapSummary',
+        'application/x-spark-health': 'healthReport',
+    }[type];
 
     const { runningTime, numberOfTicks, samplerMode } =
         unwrapSamplerMetadata(metadata);
@@ -67,16 +75,7 @@ export default function Thumbnail({ metadata, code, type }: ThumbnailProps) {
     return (
         <div ref={ref} className={classNames('thumbnail', styles.thumbnail)}>
             <div>
-                <h1>
-                    spark{' '}
-                    {
-                        {
-                            'application/x-spark-sampler': 'profile',
-                            'application/x-spark-heap': 'heap summary',
-                            'application/x-spark-health': 'health report',
-                        }[type]
-                    }
-                </h1>
+                <h1>spark {t(`thumbnail.${contentTypeKey}`)}</h1>
                 <h2>/{code}</h2>
             </div>
 
@@ -88,31 +87,48 @@ export default function Thumbnail({ metadata, code, type }: ThumbnailProps) {
                 {samplerMode === SamplerMetadata_SamplerMode.ALLOCATION && (
                     <p>
                         <FontAwesomeIcon fixedWidth={true} icon={faDatabase} />{' '}
-                        <span>Allocation</span> (memory) profile
+                        <Trans
+                            ns="common"
+                            i18nKey="thumbnail.allocProfile"
+                            components={{ span: <span /> }}
+                        />
                     </p>
                 )}
                 <p>
                     <FontAwesomeIcon fixedWidth={true} icon={faServer} />{' '}
                     <span>{platform.brand || platform.name}</span>{' '}
-                    {platformType} &quot;
+                    {t(`thumbnail.platformType.${platformType}`)} &quot;
                     <span>{platform.version}</span>&quot;
                 </p>
                 {!!platformStatistics?.playerCount && (
                     <p>
                         <FontAwesomeIcon fixedWidth={true} icon={faGamepad} />{' '}
-                        <span>{platformStatistics.playerCount}</span> players
-                        online
+                        <Trans
+                            ns="common"
+                            i18nKey="thumbnail.playersOnline"
+                            values={{ count: platformStatistics.playerCount }}
+                            components={{ span: <span /> }}
+                        />
                     </p>
                 )}
                 {runningTime && (
                     <p>
                         <FontAwesomeIcon fixedWidth={true} icon={faClock} />{' '}
-                        Duration <span>{formatDuration(runningTime)}</span>
+                        <Trans
+                            ns="common"
+                            i18nKey="thumbnail.duration"
+                            values={{
+                                duration: formatDuration(runningTime),
+                            }}
+                            components={{ span: <span /> }}
+                        />
                         {!!numberOfTicks && (
-                            <>
-                                {' '}
-                                (<span>{numberOfTicks}</span> ticks)
-                            </>
+                            <Trans
+                                ns="common"
+                                i18nKey="thumbnail.ticks"
+                                values={{ count: numberOfTicks }}
+                                components={{ span: <span /> }}
+                            />
                         )}
                     </p>
                 )}
@@ -120,15 +136,20 @@ export default function Thumbnail({ metadata, code, type }: ThumbnailProps) {
 
             <div className="footer">
                 <p>
-                    Uploaded by{' '}
-                    <Avatar user={metadata.user} platform={metadata.platform} />
-                    {metadata.user?.name}
-                    {time && (
-                        <>
-                            {' '}
-                            • {date} at {time}
-                        </>
-                    )}
+                    <Trans
+                        ns="common"
+                        i18nKey="thumbnail.uploadedBy"
+                        values={{ name: metadata.user?.name }}
+                        components={{
+                            avatar: (
+                                <Avatar
+                                    user={metadata.user}
+                                    platform={metadata.platform}
+                                />
+                            ),
+                        }}
+                    />
+                    {time && <> {t('thumbnail.at', { date, time })}</>}
                 </p>
                 <SparkLogo alt="" width="65px" height="65px" />
             </div>

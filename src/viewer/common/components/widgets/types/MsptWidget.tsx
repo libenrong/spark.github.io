@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next';
 import { PlatformStatistics_Mspt } from '../../../../proto/spark_pb';
 import { formatNumber } from '../../../util/format';
 import { Formatter, WidgetFormat } from '../format';
@@ -9,6 +10,7 @@ export interface MsptWidgetProps {
 }
 
 export default function MsptWidget({ mspt }: MsptWidgetProps) {
+    const { t } = useTranslation('widgets');
     const thresholds = {
         green: 50,
         yellow: 40,
@@ -34,11 +36,14 @@ export default function MsptWidget({ mspt }: MsptWidgetProps) {
     };
 
     return (
-        <Widget title="MSPT" formatter={formatter}>
-            <WidgetValue value={mspt.last5M!.min} label="min" />
-            <WidgetValue value={mspt.last5M!.median} label="med" />
-            <WidgetValue value={mspt.last5M!.percentile95} label="95%ile" />
-            <WidgetValue value={mspt.last5M!.max} label="max" />
+        <Widget id="mspt" title={t('title.mspt')} formatter={formatter}>
+            <WidgetValue value={mspt.last5M!.min} label={t('stat.min')} />
+            <WidgetValue value={mspt.last5M!.median} label={t('stat.med')} />
+            <WidgetValue
+                value={mspt.last5M!.percentile95}
+                label={t('stat.pct95')}
+            />
+            <WidgetValue value={mspt.last5M!.max} label={t('stat.max')} />
         </Widget>
     );
 }

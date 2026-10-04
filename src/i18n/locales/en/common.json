@@ -1,0 +1,85 @@
+{
+    "language": {
+        "toggle": "Switch language (currently {{current}})",
+        "label": "Language"
+    },
+    "theme": {
+        "darkMode": "dark mode",
+        "lightMode": "light mode",
+        "toggle": "Switch between dark and light mode (currently {{theme}} mode)"
+    },
+    "header": {
+        "defaultTitle": "spark",
+        "tagline": "A performance profiler for Minecraft clients, servers, and proxies."
+    },
+    "meta": {
+        "title": "spark",
+        "titleDownloads": "spark | downloads",
+        "titleChangelog": "spark | changelog",
+        "description": "spark is a performance profiler for Minecraft clients, servers, and proxies."
+    },
+    "footer": {
+        "openSource": "<spark>spark</spark> and <viewer>spark-viewer</viewer> are free & open source on GitHub.<br/>Copyright © 2018-{{year}} <lucko>lucko</lucko> & other spark <contributors>contributors</contributors>."
+    },
+    "filePicker": {
+        "prompt": "Drag & drop a profile/heap file here or click to select",
+        "accepted": "(only <code>.sparkprofile</code> or <code>.sparkheap</code> files are accepted)"
+    },
+    "error": {
+        "notFound": "404 - Page Not Found",
+        "serverError": "500 - Server-side error occurred",
+        "serverErrorWithCode": "Server error {{statusCode}}",
+        "clientError": "Uh oh. An unexpected error occurred with spark-viewer client."
+    },
+    "loading": "Loading...",
+    "units": {
+        "invalid": "invalid",
+        "bytes": "bytes",
+        "zeroBytes": "0 bytes",
+        "zeroShort": "0B",
+        "h": "h",
+        "m": "m",
+        "s": "s"
+    },
+    "onlineMode": {
+        "online": "online mode",
+        "offline": "offline mode",
+        "onlineBungee": "online mode (BungeeCord)",
+        "offlineBungee": "offline mode (BungeeCord)",
+        "onlineVelocity": "online mode (Velocity)",
+        "offlineVelocity": "offline mode (Velocity)"
+    },
+    "viewer": {
+        "loadingFile": "Loading file...",
+        "downloading": "Downloading...",
+        "loadFailed": "Unable to load the data. Perhaps it expired? Are you using a recent version?",
+        "unknownState": "Unknown state - this is a bug.",
+        "warning": "warning",
+        "versionWarningTitle": " This profile was created using an old version of spark! ",
+        "versionWarningBody": "Some viewer features cannot be supported. Please consider updating to a newer version.",
+        "controls": {
+            "toggleWidgets": "Click to toggle the widgets",
+            "toggleMetadata": "Click to toggle the detailed metadata display",
+            "toggleMetrics": "Click to toggle the metrics dashboard",
+            "export": "Export this profile to a local file"
+        }
+    },
+    "thumbnail": {
+        "unknown": "Unknown",
+        "unknownVersion": "unknown",
+        "profile": "profile",
+        "heapSummary": "heap summary",
+        "healthReport": "health report",
+        "allocProfile": "<span>Allocation</span> (memory) profile",
+        "playersOnline": "<span>{{count}}</span> players online",
+        "duration": "Duration <span>{{duration}}</span>",
+        "ticks": " (<span>{{count}}</span> ticks)",
+        "uploadedBy": "Uploaded by <avatar></avatar>{{name}}",
+        "at": "• {{date}} at {{time}}",
+        "platformType": {
+            "server": "server",
+            "client": "client",
+            "proxy": "proxy"
+        }
+    }
+}

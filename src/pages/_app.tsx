@@ -14,11 +14,14 @@ import {
     ReactElement,
     ReactNode,
     SetStateAction,
+    useEffect,
     useState,
 } from 'react';
+import { useTranslation } from 'react-i18next';
 import SparkLayout from '../components/SparkLayout';
 import { env } from '../env';
 import useTheme, { ThemeHook } from '../hooks/useTheme';
+import { initClientLocale } from '../i18n';
 
 export interface SelectedFile {
     selectedFile?: File;
@@ -48,12 +51,18 @@ export default function MyApp({ Component, pageProps }: AppPropsWithLayout) {
     const [selectedFile, setSelectedFile] = useState<File>();
     const themeHook = useTheme();
 
+    useEffect(() => {
+        initClientLocale();
+    }, []);
+
+    const { t } = useTranslation('common');
     const router = useRouter();
     const title =
         {
-            '/download': 'spark | downloads',
-            '/changelog': 'spark | changelog',
-        }[router.pathname] || 'spark';
+            '/download': t('meta.titleDownloads'),
+            '/changelog': t('meta.titleChangelog'),
+        }[router.pathname] || t('meta.title');
+    const description = t('meta.description');
 
     return (
         <>
@@ -68,10 +77,7 @@ export default function MyApp({ Component, pageProps }: AppPropsWithLayout) {
                     key="twitter-card"
                 />
                 <meta name="twitter:title" content="spark" />
-                <meta
-                    name="twitter:description"
-                    content="spark is a performance profiler for Minecraft clients, servers, and proxies."
-                />
+                <meta name="twitter:description" content={description} />
                 <meta
                     name="twitter:image"
                     content={`${env.NEXT_PUBLIC_SPARK_BASE_URL}/assets/logo-inverted-512.png`}
@@ -79,10 +85,7 @@ export default function MyApp({ Component, pageProps }: AppPropsWithLayout) {
                 />
 
                 <meta property="og:title" content="spark" />
-                <meta
-                    property="og:description"
-                    content="spark is a performance profiler for Minecraft clients, servers, and proxies."
-                />
+                <meta property="og:description" content={description} />
                 <meta property="og:type" content="product" />
                 <meta
                     property="og:image"

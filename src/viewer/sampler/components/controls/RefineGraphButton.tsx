@@ -1,5 +1,6 @@
 import { faRuler } from '@fortawesome/free-solid-svg-icons';
 import { Dispatch, SetStateAction } from 'react';
+import { useTranslation } from 'react-i18next';
 import FaButton from '../../../../components/FaButton';
 
 export interface RefineGraphButtonProps {
@@ -13,6 +14,8 @@ export default function RefineGraphButton({
     showRefineGraph,
     setShowRefineGraph,
 }: RefineGraphButtonProps) {
+    const { t } = useTranslation('sampler');
+
     if (!refineGraphSupported) {
         return null;
     }
@@ -25,7 +28,7 @@ export default function RefineGraphButton({
         <FaButton
             icon={faRuler}
             onClick={onClick}
-            title="View the refine graph"
+            title={t('controls.refine')}
             extraClassName={showRefineGraph ? 'toggled' : undefined}
         />
     );

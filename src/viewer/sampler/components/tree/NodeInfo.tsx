@@ -1,4 +1,5 @@
 import { ReactNode, useContext } from 'react';
+import { useTranslation } from 'react-i18next';
 import {
     formatBytesShort,
     formatTime,
@@ -34,6 +35,7 @@ export default function NodeInfo({
     infoPoint,
     isSourceRoot,
 }: NodeInfoProps) {
+    const { t } = useTranslation('sampler');
     const metadata = useContext(MetadataContext)!;
 
     // if this the root of a source (a thread node), display the total of the
@@ -93,13 +95,12 @@ export default function NodeInfo({
                 {infoPoint}
                 <span className="time">
                     {formatValue(time)}
-                    {Math.floor(selfTime) > 0 && !isSourceRoot && (
-                        <>
-                            {' '}
-                            (self: {formatValue(selfTime)} -{' '}
-                            {humanFriendlyPercentage(selfTime / threadTime)})
-                        </>
-                    )}
+                    {Math.floor(selfTime) > 0 &&
+                        !isSourceRoot &&
+                        t('tree.self', {
+                            value: formatValue(selfTime),
+                            pct: humanFriendlyPercentage(selfTime / threadTime),
+                        })}
                     {!!source && <> ({source})</>}
                 </span>
             </span>

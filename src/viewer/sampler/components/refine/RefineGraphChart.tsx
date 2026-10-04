@@ -1,4 +1,5 @@
 import { useMemo } from 'react';
+import { useTranslation } from 'react-i18next';
 import {
     createContainer,
     VictoryAxis,
@@ -27,6 +28,7 @@ export default function RefineGraphChart({
     maxima,
     selectionCallback,
 }: GraphChartProps) {
+    const { t } = useTranslation('sampler');
     const theme = useMemo(() => getTheme(), []);
     const flyoutHeight = (data.length / 7) * 80;
     const flyoutWidth = data.some(data => {
@@ -90,10 +92,10 @@ export default function RefineGraphChart({
                     }
                     voronoiBlacklist={[/.*\-line$/]} // use the built-in blacklist feature to disable line labels
                     labels={({ datum }: any) => {
-                        return `${getAxisLabel(datum.unit)}: ${formatValue(
-                            datum.y,
-                            datum.unit
-                        )}`;
+                        return t('refine.tooltip', {
+                            axisLabel: getAxisLabel(datum.unit),
+                            value: formatValue(datum.y, datum.unit),
+                        });
                     }}
                 />
             }
@@ -156,7 +158,7 @@ export default function RefineGraphChart({
 
             <VictoryAxis
                 domain={[0, -scale]}
-                tickFormat={(x: any) => `${x}m`}
+                tickFormat={(x: any) => t('refine.minute', { n: x })}
                 crossAxis={false}
             />
         </VictoryChart>

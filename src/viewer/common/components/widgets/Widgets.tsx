@@ -1,4 +1,5 @@
 import classNames from 'classnames';
+import { useTranslation } from 'react-i18next';
 import styles from '../../../../style/widgets.module.scss';
 import { SparkMetadata } from '../../../proto/guards';
 import CpuWidget from './types/CpuWidget';
@@ -15,6 +16,7 @@ export interface WidgetsProps {
 }
 
 export default function Widgets({ metadata, expanded }: WidgetsProps) {
+    const { t } = useTranslation('widgets');
     const platform = metadata.platformStatistics!;
     const system = metadata.systemStatistics!;
 
@@ -25,18 +27,33 @@ export default function Widgets({ metadata, expanded }: WidgetsProps) {
         >
             {platform.tps && <TpsWidget tps={platform.tps} />}
             {platform.mspt && <MsptWidget mspt={platform.mspt} />}
-            <CpuWidget cpu={system.cpu!.processUsage!} label="process" />
-            <MemoryWidget memory={platform.memory!.heap!} label="process" />
-            <CpuWidget cpu={system.cpu!.systemUsage!} label="system" />
-            <MemoryWidget memory={system.memory!.physical!} label="physical" />
-            <MemoryWidget memory={system.memory!.swap!} label="swap" />
+            <CpuWidget
+                cpu={system.cpu!.processUsage!}
+                label={t('scope.process')}
+            />
+            <MemoryWidget
+                memory={platform.memory!.heap!}
+                label={t('scope.process')}
+            />
+            <CpuWidget
+                cpu={system.cpu!.systemUsage!}
+                label={t('scope.system')}
+            />
+            <MemoryWidget
+                memory={system.memory!.physical!}
+                label={t('scope.physical')}
+            />
+            <MemoryWidget
+                memory={system.memory!.swap!}
+                label={t('scope.swap')}
+            />
             <DiskWidget disk={system.disk!} />
             {platform.ping && <PingWidget ping={platform.ping} />}
             {Object.entries(platform.gc).map(([label, data]) => {
                 return (
                     <GcWidget
                         gc={data}
-                        title="during"
+                        title={t('scope.during')}
                         label={label}
                         key={label}
                     />
@@ -46,7 +63,7 @@ export default function Widgets({ metadata, expanded }: WidgetsProps) {
                 return (
                     <GcWidget
                         gc={data}
-                        title="all"
+                        title={t('scope.all')}
                         label={label}
                         key={'system ' + label}
                     />

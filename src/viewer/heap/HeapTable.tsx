@@ -1,4 +1,5 @@
 import { CSSProperties } from 'react';
+import { useTranslation } from 'react-i18next';
 import { List, RowComponentProps } from 'react-window';
 import { formatBytes } from '../common/util/format';
 import { HeapEntry } from '../proto/spark_pb';
@@ -35,6 +36,7 @@ function Row({
 }
 
 export default function HeapTable({ data, searchQuery }: HeapTableProps) {
+    const { t } = useTranslation('heap');
     let { entries } = data;
 
     if (searchQuery) {
@@ -49,10 +51,10 @@ export default function HeapTable({ data, searchQuery }: HeapTableProps) {
                 className="heap-table-header"
                 style={{ height: HEADER_HEIGHT }}
             >
-                <span className="col-rank">Rank</span>
-                <span className="col-instances">Instances</span>
-                <span className="col-size">Size</span>
-                <span className="col-type">Type</span>
+                <span className="col-rank">{t('table.rank')}</span>
+                <span className="col-instances">{t('table.instances')}</span>
+                <span className="col-size">{t('table.size')}</span>
+                <span className="col-type">{t('table.type')}</span>
             </div>
             <List
                 rowComponent={Row}

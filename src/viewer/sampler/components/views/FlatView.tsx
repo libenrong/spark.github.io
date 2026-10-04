@@ -5,6 +5,7 @@ import {
     useContext,
     useState,
 } from 'react';
+import { useTranslation } from 'react-i18next';
 import TextBox from '../../../../components/TextBox';
 import FlatThreadVirtualNode from '../../node/FlatThreadVirtualNode';
 import SamplerData from '../../SamplerData';
@@ -31,6 +32,7 @@ export default function FlatView({
     viewData,
     setLabelMode,
 }: FlatViewProps) {
+    const { t } = useTranslation('common');
     const labelMode = useContext(LabelModeContext);
     const [bottomUp, setBottomUp] = useState(false);
     const [selfTimeMode, setSelfTimeMode] = useState(false);
@@ -54,7 +56,7 @@ export default function FlatView({
             </FlatViewHeader>
             <hr />
             {!view ? (
-                <TextBox>Loading...</TextBox>
+                <TextBox>{t('loading')}</TextBox>
             ) : (
                 <div className="stack">
                     <BottomUpContext.Provider value={bottomUp}>

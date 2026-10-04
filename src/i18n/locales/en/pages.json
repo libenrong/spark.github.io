@@ -1,0 +1,76 @@
+{
+    "nav": {
+        "downloads": {
+            "title": "Downloads",
+            "description": "Download the latest version of spark."
+        },
+        "docs": {
+            "title": "Documentation",
+            "description": "Read the documentation and usage guides."
+        }
+    },
+    "about": {
+        "heading": "About",
+        "intro": "spark is a performance profiler, made up of three main components.",
+        "links": "More information about spark can be found on <github>GitHub</github>, or you can come chat with us on <discord>Discord</discord>."
+    },
+    "features": {
+        "profiler": {
+            "title": "Profiler",
+            "description": "spark can help to diagnose performance problems and bottlenecks with its built-in profiler."
+        },
+        "memory": {
+            "title": "Memory Inspection",
+            "description": "spark can produce full heap dumps, present a summary of what’s using the most memory, and monitor GC activity."
+        },
+        "health": {
+            "title": "Health Reporting",
+            "description": "spark monitors and reports a number of key metrics which are useful for tracking performance over time."
+        }
+    },
+    "viewer": {
+        "heading": "Viewer",
+        "intro": "This website is also an online viewer for spark data.",
+        "usageIntro": "In order to use it:",
+        "steps": {
+            "step1": "Generate a <profile>profile</profile> or <heapSummary>heap summary</heapSummary> using the appropriate spark commands.",
+            "step2": "After the data has been uploaded, click the link to open the viewer."
+        },
+        "localFiles": "You can also generate or export a <code>.sparkprofile</code> or <code>.sparkheap</code> file and open it by dragging it into the box below.",
+        "opensource": "The website/viewer is written in JavaScript using the React framework, and open-source'd on GitHub. Pull requests are much appreciated!"
+    },
+    "downloads": {
+        "heading": "Downloads",
+        "error": "Error: unable to get version information.",
+        "unknown": "unknown",
+        "latest": "The latest version of spark is <version>v{{version}}</version>, which was created at {{timestamp}}.",
+        "docs": "Once you've got spark installed, head over to the <link>documentation</link> to learn how to use it!",
+        "paperNote": "Note: spark is pre-bundled with Paper 1.21+, so you don't need to install the plugin!",
+        "logoAlt": "{{name}} logo",
+        "otherPlatforms": {
+            "title": "Other Platforms",
+            "intro": "spark is also available for some other platforms. These releases are provided as-is and are supported by the community. For more info, please see <link>spark-extra-platforms</link> on GitHub."
+        },
+        "recentChanges": {
+            "title": "Recent Changes",
+            "more": "And more! See the <link>full changelog</link>."
+        },
+        "olderVersions": {
+            "title": "Older Versions",
+            "intro": "Releases for older Minecraft versions are listed below. These are not actively supported, but should still work ok :)",
+            "note": "(Note: The links above will open CurseForge.com in a new tab)"
+        }
+    },
+    "changelog": {
+        "heading": "Changelog",
+        "error": "Error: unable to get changelog.",
+        "intro": "The list below shows the most recent changes committed to the <repo>spark Git repository</repo>.",
+        "downloadsLink": "Go to the <link>downloads</link> page to get the latest version."
+    },
+    "viewerPage": {
+        "title": "spark | {{code}}"
+    },
+    "thumbnail": {
+        "loading": "loading"
+    }
+}

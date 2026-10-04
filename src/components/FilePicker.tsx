@@ -1,5 +1,6 @@
 import classNames from 'classnames';
 import { useDropzone } from 'react-dropzone';
+import { Trans, useTranslation } from 'react-i18next';
 
 import styles from '../style/homepage.module.scss';
 
@@ -8,6 +9,7 @@ export interface FilePickerProps {
 }
 
 export default function FilePicker({ callback }: FilePickerProps) {
+    const { t } = useTranslation('common');
     const { getRootProps, getInputProps } = useDropzone({
         accept: { '': ['.sparkprofile', '.sparkheap'] },
         multiple: false,
@@ -23,10 +25,9 @@ export default function FilePicker({ callback }: FilePickerProps) {
             })}
         >
             <input {...getInputProps()} />
-            <p>Drag &amp; drop a profile/heap file here or click to select</p>
+            <p>{t('filePicker.prompt')}</p>
             <em>
-                (only <code>.sparkprofile</code> or <code>.sparkheap</code>{' '}
-                files are accepted)
+                <Trans ns="common" i18nKey="filePicker.accepted" />
             </em>
         </div>
     );

@@ -1,5 +1,6 @@
 import { faFire } from '@fortawesome/free-solid-svg-icons';
 import { Dispatch, SetStateAction } from 'react';
+import { useTranslation } from 'react-i18next';
 import FaButton from '../../../../components/FaButton';
 import BasicVirtualNode from '../../node/BasicVirtualNode';
 import VirtualNode from '../../node/VirtualNode';
@@ -11,6 +12,8 @@ export interface FlameButtonProps {
 }
 
 export default function FlameButton({ data, setFlameData }: FlameButtonProps) {
+    const { t } = useTranslation('sampler');
+
     if (data.threads.length !== 1) {
         return null;
     }
@@ -20,10 +23,6 @@ export default function FlameButton({ data, setFlameData }: FlameButtonProps) {
     }
 
     return (
-        <FaButton
-            icon={faFire}
-            onClick={onClick}
-            title="View the profile as a Flame Graph"
-        />
+        <FaButton icon={faFire} onClick={onClick} title={t('controls.flame')} />
     );
 }

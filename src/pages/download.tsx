@@ -3,6 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Image, { StaticImageData } from 'next/image';
 import Link from 'next/link';
 import { ReactNode } from 'react';
+import { Trans, useTranslation } from 'react-i18next';
 import bukkitLogo from '../assets/logos/bukkit.png';
 import bungeeCordLogo from '../assets/logos/bungeecord.png';
 import fabricLogo from '../assets/logos/fabric.png';
@@ -82,6 +83,7 @@ const OLD_VERSIONS: OldVersion[] = [
 ];
 
 export default function Download() {
+    const { t } = useTranslation('pages');
     const [info, status] = useFetchResult<JenkinsInfo>(
         `https://ci.lucko.me/job/spark/lastSuccessfulBuild/api/json?tree=url,timestamp,artifacts[fileName,relativePath]`
     );
@@ -94,12 +96,12 @@ export default function Download() {
     if (status !== Status.ERROR) {
         content = <DownloadPage info={info} changelog={changelog} />;
     } else {
-        content = <TextBox>Error: unable to get version information.</TextBox>;
+        content = <TextBox>{t('downloads.error')}</TextBox>;
     }
 
     return (
         <article className={styles.downloads}>
-            <h1>Downloads</h1>
+            <h1>{t('downloads.heading')}</h1>
             {content}
         </article>
     );
@@ -113,13 +115,14 @@ interface ArtifactsMap {
 }
 
 const processJenkinsInfo = (
-    info: JenkinsInfo | undefined
+    info: JenkinsInfo | undefined,
+    unknown: string
 ): [string, string, ArtifactsMap] => {
     const artifacts: ArtifactsMap = {};
-    let version = 'unknown';
+    let version = unknown;
     const timestamp = info
         ? new Date(info?.timestamp).toLocaleString()
-        : 'unknown';
+        : unknown;
     for (const { fileName, relativePath } of info?.artifacts || []) {
         const [v, platform] = fileName.slice(0, -4).split('-').slice(1);
         version = v;
@@ -138,15 +141,24 @@ const DownloadPage = ({
     info?: JenkinsInfo;
     changelog?: ChangelogData;
 }) => {
-    const [version, timestamp, artifacts] = processJenkinsInfo(info);
+    const { t } = useTranslation('pages');
+    const [version, timestamp, artifacts] = processJenkinsInfo(
+        info,
+        t('downloads.unknown')
+    );
     const changelogSlice = changelog?.changelog?.slice(0, 5) || [];
 
     return (
         <>
             <p>
-                The latest version of spark is{' '}
-                <span className="version-number">v{version}</span>, which was
-                created at {timestamp}.
+                <Trans
+                    ns="pages"
+                    i18nKey="downloads.latest"
+                    values={{ version, timestamp }}
+                    components={{
+                        version: <span className="version-number" />,
+                    }}
+                />
             </p>
             <br />
 
@@ -154,54 +166,62 @@ const DownloadPage = ({
 
             <br />
             <p>
-                Once you&apos;ve got spark installed, head over to the{' '}
-                <a href={`${env.NEXT_PUBLIC_SPARK_BASE_URL}/docs`}>
-                    documentation
-                </a>{' '}
-                to learn how to use it!
+                <Trans
+                    ns="pages"
+                    i18nKey="downloads.docs"
+                    components={{
+                        link: (
+                            <a
+                                href={`${env.NEXT_PUBLIC_SPARK_BASE_URL}/docs`}
+                            />
+                        ),
+                    }}
+                />
             </p>
-            <p className="caveat">
-                Note: spark is pre-bundled with Paper 1.21+, so you don&apos;t
-                need to install the plugin!
-            </p>
+            <p className="caveat">{t('downloads.paperNote')}</p>
 
-            <h2>Other Platforms</h2>
+            <h2>{t('downloads.otherPlatforms.title')}</h2>
             <p>
-                spark is also available for some other platforms. These releases
-                are provided as-is and are supported by the community. For more
-                info, please see{' '}
-                <a href="https://github.com/lucko/spark-extra-platforms">
-                    spark-extra-platforms
-                </a>{' '}
-                on GitHub.{' '}
+                <Trans
+                    ns="pages"
+                    i18nKey="downloads.otherPlatforms.intro"
+                    components={{
+                        link: (
+                            <a href="https://github.com/lucko/spark-extra-platforms" />
+                        ),
+                    }}
+                />
             </p>
             <ExtraDownloadButtons />
 
-            <h2>Recent Changes</h2>
+            <h2>{t('downloads.recentChanges.title')}</h2>
             <RecentChangelog changelog={changelogSlice} />
 
-            <h2>Older Versions</h2>
-            <p>
-                Releases for older Minecraft versions are listed below. These
-                are not actively supported, but should still work ok :)
-            </p>
+            <h2>{t('downloads.olderVersions.title')}</h2>
+            <p>{t('downloads.olderVersions.intro')}</p>
             <OlderVersionsList versions={OLD_VERSIONS} />
-            <p>(Note: The links above will open CurseForge.com in a new tab)</p>
+            <p>{t('downloads.olderVersions.note')}</p>
         </>
     );
 };
 
 const RecentChangelog = ({ changelog }: { changelog: ChangelogEntry[] }) => {
+    const { t } = useTranslation('pages');
+    const { t: tc } = useTranslation('common');
+
     if (changelog.length === 0) {
-        return <p>Loading...</p>;
+        return <p>{tc('loading')}</p>;
     }
 
     return (
         <div className={changelogStyles.changelog}>
             <ChangelogList entries={changelog} />
             <p>
-                And more! See the <Link href={'changelog'}>full changelog</Link>
-                .
+                <Trans
+                    ns="pages"
+                    i18nKey="downloads.recentChanges.more"
+                    components={{ link: <Link href={'changelog'} /> }}
+                />
             </p>
         </div>
     );
@@ -318,6 +338,7 @@ const DownloadInfo = ({
     icon,
     width,
 }: DownloadInfoProps) => {
+    const { t } = useTranslation('pages');
     return (
         <a className="link" href={url}>
             {logo && (
@@ -326,7 +347,7 @@ const DownloadInfo = ({
                     style={{ objectFit: 'contain' }}
                     width={width ?? 50}
                     height={50}
-                    alt={name + ' logo'}
+                    alt={t('downloads.logoAlt', { name })}
                 />
             )}
             {icon}
@@ -341,6 +362,7 @@ const DownloadInfo = ({
 };
 
 const OlderVersionsList = ({ versions }: { versions: OldVersion[] }) => {
+    const { t } = useTranslation('pages');
     return (
         <div className="older-versions">
             {versions.map(oldVersion => {
@@ -359,7 +381,9 @@ const OlderVersionsList = ({ versions }: { versions: OldVersion[] }) => {
                                 }}
                                 width={40}
                                 height={40}
-                                alt={oldVersion.modloader + ' logo'}
+                                alt={t('downloads.logoAlt', {
+                                    name: oldVersion.modloader,
+                                })}
                             />{' '}
                             {oldVersion.modloader}
                         </h3>

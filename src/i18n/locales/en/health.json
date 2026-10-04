@@ -1,0 +1,12 @@
+{
+    "title": "Health Report @ {{time}} {{date}} | spark",
+    "createdBy": "Health Report created by <avatar></avatar>{{user}}",
+    "at": " @ {{time}} {{date}}",
+    "socket": {
+        "connected": "<b>Connected</b> via WebSocket",
+        "description": "spark viewer is connected to spark using a socket connection.",
+        "statisticsInterval": "The statistics will update every {{n}} seconds.",
+        "latency": "<b>Latency</b>: {{n}}ms",
+        "clientId": "<b>Client ID</b>: {{id}}"
+    }
+}

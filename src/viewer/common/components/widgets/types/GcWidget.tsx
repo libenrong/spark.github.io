@@ -1,3 +1,5 @@
+import { useTranslation } from 'react-i18next';
+import i18n from '../../../../../i18n';
 import { PlatformStatistics_Gc } from '../../../../proto/spark_pb';
 import { formatNumber } from '../../../util/format';
 import { Formatter, WidgetFormat } from '../format';
@@ -11,6 +13,7 @@ export interface GcWidgetProps {
 }
 
 export default function GcWidget({ gc, title, label }: GcWidgetProps) {
+    const { t } = useTranslation('widgets');
     let warningLevels = {
         // if a GC takes > the time in ms
         time: {
@@ -98,7 +101,7 @@ export default function GcWidget({ gc, title, label }: GcWidgetProps) {
         format: value => {
             if (value < 1000) {
                 return (
-                    value.toLocaleString('en-US', {
+                    value.toLocaleString(i18n.language, {
                         maximumSignificantDigits: 2,
                         useGrouping: false,
                     }) + 'ms'
@@ -116,7 +119,7 @@ export default function GcWidget({ gc, title, label }: GcWidgetProps) {
                 return minutes + 'm' + Math.round(seconds) + 's';
             } else {
                 return (
-                    seconds.toLocaleString('en-US', {
+                    seconds.toLocaleString(i18n.language, {
                         maximumFractionDigits: 1,
                     }) + 's'
                 );
@@ -125,20 +128,20 @@ export default function GcWidget({ gc, title, label }: GcWidgetProps) {
     };
 
     return (
-        <Widget title="GC" label={label + ', ' + title}>
+        <Widget id="gc" title={t('title.gc')} label={label + t('sep') + title}>
             <WidgetValue
                 value={gc.total}
-                label="total"
+                label={t('stat.total')}
                 formatter={WidgetFormat.defaultFormatter}
             />
             <WidgetValue
                 value={gc.avgTime}
-                label="avg time"
+                label={t('stat.avgTime')}
                 formatter={timeFormatter}
             />
             <WidgetValue
                 value={gc.avgFrequency}
-                label="avg freq"
+                label={t('stat.avgFreq')}
                 formatter={freqFormatter}
             />
         </Widget>

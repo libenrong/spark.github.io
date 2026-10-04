@@ -2,6 +2,7 @@ import { Head, Html, Main, NextScript } from 'next/document';
 import { env } from '../env';
 
 const { host } = new URL(env.NEXT_PUBLIC_SPARK_BASE_URL);
+const basePath = process.env.NEXT_PUBLIC_BASE_PATH || '';
 
 export default function Document() {
     return (
@@ -14,14 +15,14 @@ export default function Document() {
                     content="spark is a performance profiler for Minecraft clients, servers, and proxies."
                 />
                 <link
-                    href="/assets/logo-inverted-512.png"
+                    href={`${basePath}/assets/logo-inverted-512.png`}
                     rel="shortcut icon"
                     sizes="512x512"
                     type="image/png"
                 />
                 <link
                     rel="apple-touch-icon"
-                    href="/assets/logo-inverted-160.png"
+                    href={`${basePath}/assets/logo-inverted-160.png`}
                 />
 
                 {host === 'spark.lucko.me' && (

@@ -1,0 +1,229 @@
+{
+    "title": {
+        "profile": "分析报告",
+        "memoryProfile": "内存分配报告",
+        "document": "{{title}} @ {{time}} {{date}} | spark",
+        "heading": "{{user}} @ {{time}} {{date}}，采样间隔 {{interval}}{{ticksOver}}",
+        "comment": "“{{comment}}”",
+        "ticksOver": "，tick ≥ {{n}}ms"
+    },
+    "controls": {
+        "flame": "以火焰图形式查看分析报告",
+        "exitFlame": "退出火焰图视图",
+        "settings": "点击显示设置菜单",
+        "ai": "使用 AI 分析此报告",
+        "refine": "查看时间筛选图表",
+        "toggleView": "切换视图",
+        "search": "搜索…"
+    },
+    "views": {
+        "all": "全部",
+        "flat": "扁平",
+        "mods": "模组",
+        "plugins": "插件"
+    },
+    "contextMenu": {
+        "viewFlame": "以火焰图查看",
+        "toggleBookmark": "切换书签",
+        "clearBookmarks": "清除所有书签"
+    },
+    "settings": {
+        "nameLabel": "{{name}}：",
+        "mappings": {
+            "name": "混淆映射",
+            "desc": "选择查看器显示分析栈帧时所使用的反混淆映射。",
+            "title": "混淆映射",
+            "none": "无",
+            "autoDetect": "自动检测",
+            "noMappings": "不使用映射"
+        },
+        "infoPoints": {
+            "name": "信息点",
+            "desc": "选择是否显示信息点。"
+        }
+    },
+    "ai": {
+        "title": "AI 分析",
+        "provider": "服务商",
+        "requestMode": "请求方式",
+        "modeDirect": "直连（浏览器）",
+        "modeProxy": "经本站代理",
+        "baseUrl": "API 地址",
+        "model": "模型",
+        "apiKey": "API Key",
+        "apiKeyPlaceholder": "sk-…",
+        "keyNote": "API Key 仅保存在本浏览器（localStorage）中，并且只会发送到上方配置的接口地址。",
+        "run": "开始分析",
+        "rerun": "重新分析",
+        "running": "分析中…",
+        "stop": "停止",
+        "copy": "复制",
+        "copied": "已复制！",
+        "thinking": "正在等待模型响应…",
+        "placeholder": "在上方填写 API Key，点击「开始分析」获取此报告的性能热点分析与优化建议。",
+        "errorConfig": "请先填写 API 地址、模型和 API Key。",
+        "emptyResponse": "连接成功，但模型没有返回任何内容，请检查模型名称和 API 地址。",
+        "reasonerOnly": "模型只返回了思考过程、没有正文（可能超出 max_tokens 上限）。可换用 deepseek-chat，或增大 max_tokens / 精简输入。",
+        "rawLabel": "查看原始响应",
+        "directFailed": "无法直接连接该端点（{{message}}），通常是跨域（CORS）限制，可切换为「经本站代理」后重试。",
+        "error": "分析失败：{{message}}",
+        "sections": {
+            "conclusion": "总体结论",
+            "abnormal": "异常指标",
+            "gc": "垃圾回收",
+            "diagnosis": "问题诊断",
+            "hotspots": "热点方法",
+            "steps": "优先处理"
+        },
+        "status": {
+            "ok": "正常",
+            "warn": "警告",
+            "bad": "严重"
+        },
+        "metrics": {
+            "tps": "TPS",
+            "mspt": "MSPT",
+            "heap": "堆内存",
+            "cpu": "CPU",
+            "ping": "延迟"
+        },
+        "metricNotes": {
+            "tps": "每秒服务器刻数",
+            "mspt": "每刻耗时",
+            "heap": "Java 堆使用率",
+            "cpu": "CPU 负载",
+            "ping": "连接延迟",
+            "gc": "垃圾回收停顿"
+        },
+        "gc": {
+            "collections": "次回收",
+            "avgPause": "平均停顿",
+            "avgInterval": "平均间隔"
+        },
+        "tokens": {
+            "inputNoCache": "未命中输入",
+            "inputCached": "缓存命中",
+            "output": "输出",
+            "total": "合计",
+            "hitRate": "缓存命中率"
+        },
+        "hotspots": {
+            "internal": "内部"
+        },
+        "valueLabels": {
+            "1m": "1分钟",
+            "5m": "5分钟",
+            "15m": "15分钟",
+            "target": "目标",
+            "mean": "均值",
+            "p95": "P95",
+            "max": "最大",
+            "used": "已用",
+            "pct": "占比",
+            "process": "进程",
+            "median": "中位数"
+        },
+        "time": {
+            "h": "小时",
+            "m": "分",
+            "s": "秒"
+        }
+    },
+    "noData": {
+        "title": "无数据",
+        "pending": "此分析报告尚无数据！页面即将自动刷新。",
+        "empty": "此分析报告不包含任何数据！"
+    },
+    "socket": {
+        "connected": "<b>已连接</b>（WebSocket）",
+        "description": "spark viewer 通过 socket 连接与 spark 分析器相连。<br/>统计数据每 {{interval}} 秒更新一次，分析器数据每分钟更新一次。",
+        "latency": "<b>延迟</b>：{{value}}ms",
+        "clientId": "<b>客户端 ID</b>：{{id}}"
+    },
+    "headers": {
+        "all": {
+            "title": "分析器 - 全部视图",
+            "desc": "这是分析器的默认视图，以可展开的树状结构展示整个分析报告。"
+        },
+        "flat": {
+            "title": "分析器 - 扁平视图",
+            "desc": "此视图以扁平化的方式展示分析结果，列出前 250 个方法调用。"
+        },
+        "sources": {
+            "title": "分析器 - {{noun}}视图",
+            "desc": "此视图按{{noun}}拆分，展示过滤后的分析结果。"
+        }
+    },
+    "noun": {
+        "mod": "模组",
+        "mods": "模组",
+        "plugin": "插件",
+        "plugins": "插件"
+    },
+    "sources": {
+        "other": "其他",
+        "otherDesc": "以下其他{{noun}}也已安装，但没有出现在此分析报告中。耶！"
+    },
+    "buttons": {
+        "titleLabel": "{{title}}：",
+        "display": {
+            "title": "调用树方向",
+            "bottomUp": "自底向上",
+            "topDown": "自顶向下",
+            "bottomUpDesc": "调用树是反向的——展开节点会显示调用它的方法。",
+            "topDownDesc": "调用树是“正向”的——展开节点会显示它所调用的子方法。"
+        },
+        "labelMode": {
+            "title": "标签",
+            "bytesPerSecond": "每秒字节数",
+            "percentage": "百分比",
+            "timePerTick": "每 tick 耗时",
+            "bytesPerSecondDesc": "显示的数值是每个栈帧平均每秒分配的内存量（即内存压力）。",
+            "percentageBytesDesc": "显示的数值是每个栈帧分配的内存量占总分配量的百分比。",
+            "timePerTickDesc": "每个栈帧显示的数值是该方法每 tick 平均执行的毫秒数。",
+            "percentageTimeDesc": "每个栈帧显示的数值是其耗时占总耗时的百分比。"
+        },
+        "mergeMode": {
+            "title": "合并模式",
+            "merge": "合并",
+            "separate": "分离",
+            "mergeDesc": "签名相同的方法调用会被合并，即使它们并非由同一个调用方方法发起。",
+            "separateDesc": "签名相同、但并非由同一个调用方方法发起的方法调用会分开显示。"
+        },
+        "sortMode": {
+            "title": "排序方式",
+            "selfBytes": "自身分配字节数",
+            "totalBytes": "总分配字节数",
+            "selfTime": "自身耗时",
+            "totalTime": "总耗时",
+            "selfBytesDesc": "方法按照其内部直接分配的内存量排序。",
+            "totalBytesDesc": "方法按照其内部直接分配的内存量以及子调用中的分配量排序。",
+            "selfTimeDesc": "方法按照“自身耗时”排序（即执行方法内部代码所花的时间）。",
+            "totalTimeDesc": "方法按照“总耗时”排序（即执行方法内部代码与所有子调用所花的时间）。"
+        }
+    },
+    "tree": {
+        "self": "（自身耗时：{{value}} - {{pct}}）",
+        "lineTitle": "在 {{class}}.{{method}}() 的第 {{n}} 行调用"
+    },
+    "native": "（原生）",
+    "flame": {
+        "tooltip": "{{method}} - {{value}}"
+    },
+    "refine": {
+        "title": "时间筛选",
+        "description": "下图展示了分析期间的若干关键指标。用鼠标拖动框选，即可把分析结果筛选到指定的时间段。",
+        "tooltip": "{{axisLabel}}：{{value}}",
+        "minute": "{{n}}分钟",
+        "axis": {
+            "tps": "TPS",
+            "msptMedian": "MSPT",
+            "cpuProcess": "CPU（进程）",
+            "cpuSystem": "CPU（系统）",
+            "players": "玩家",
+            "entities": "实体",
+            "tileEntities": "方块实体",
+            "chunks": "区块"
+        }
+    }
+}

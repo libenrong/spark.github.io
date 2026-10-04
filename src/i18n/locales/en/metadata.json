@@ -1,0 +1,105 @@
+{
+    "heading": "Metadata",
+    "description": "The panel below shows metadata/information about the platform, system, and world. You can switch between different views using the buttons below.",
+    "unknownView": "Unknown view.",
+    "tabs": {
+        "platform": "Platform",
+        "memory": "Memory",
+        "network": "Network",
+        "jvmArgs": "JVM Flags",
+        "configurations": "Configurations",
+        "world": "World",
+        "misc": "Misc",
+        "gameRules": "Game Rules",
+        "plugins": "Plugins/Mods"
+    },
+    "punctuation": {
+        "dot": ".",
+        "colon": ":"
+    },
+    "platformType": {
+        "server": "server",
+        "client": "client",
+        "proxy": "proxy",
+        "application": "application"
+    },
+    "platform": {
+        "intro": "The platform is a <brand>{{brand}}</brand> {{platformType}} running version \"<version>{{version}}</version>\".",
+        "introSystem": "The system is a <brand>{{brand}}</brand> {{platformType}} running spark version \"<version>{{version}}</version>\".",
+        "minecraftVersion": "The detected Minecraft version is \"<version>{{version}}</version>\".",
+        "onlineMode": "The {{platformType}} is running in <mode>{{onlineMode}}</mode>.",
+        "playerCount": "The {{platformType}} had a player count of <count>{{count}}</count> when the profile completed.",
+        "profilerRun": "The profiler{{engine}} was running for <duration>{{duration}}</duration>",
+        "profilerTicks": " (<count>{{count}}</count> ticks)",
+        "profilerExceeded": ". <count>{{count}}</count> ticks exceeded the 'only ticks over' threshold.",
+        "engineAsync": " (engine async)",
+        "engineJava": " (engine java)",
+        "os": "The system is running <os>{{os}}</os> (<arch>{{arch}}</arch>) version \"<version>{{version}}</version>\" and has <threads>{{threads}}</threads> CPU threads available.",
+        "cpu": "The CPU is described as an <model>{{model}}</model>.",
+        "java": "The process is using Java <version>{{version}}</version> (<vendorVersion>{{vendorVersion}}</vendorVersion> from <vendor>{{vendor}}</vendor>).",
+        "jvm": " The JVM is a <name>{{name}}</name>.",
+        "uptime": "The current process uptime is <duration>{{duration}}</duration>."
+    },
+    "memory": {
+        "heap": "Heap",
+        "nonHeap": "Non Heap",
+        "pool": "Heap - {{name}}",
+        "atLastGC": "{{name}} (at last GC)",
+        "used": "Used:",
+        "committed": "Committed:",
+        "max": "Max:"
+    },
+    "network": {
+        "note": "Note: the usage tracked below is captured at a system level (includes data from other processes running on the same machine).",
+        "transmit": "Transmit",
+        "receive": "Receive",
+        "bytesPerSec": "bytes/sec",
+        "packetsPerSec": "packets/sec",
+        "min": "min",
+        "med": "med",
+        "pct95": "95%ile",
+        "max": "max"
+    },
+    "gamerules": {
+        "allDefault": "All game rules are set to default values.",
+        "overridesHeading": "Game Rule Overrides",
+        "overridesNote": "(Values are only shown below when they differ from the default)",
+        "ruleDefault": "{{name}} (default: <value></value>)",
+        "showDefaults": "Show default values",
+        "hideDefaults": "Hide default values",
+        "defaultsHeading": "Game Rule Defaults",
+        "defaultsNote": "(The default values for each game rule)"
+    },
+    "plugins": {
+        "heading": "Plugins/Mods",
+        "dataPacksHeading": "Data Packs",
+        "showBuiltinPlugins": "Show built-in plugins",
+        "hideBuiltinPlugins": "Hide built-in plugins",
+        "showBuiltinDataPacks": "Show built-in Data Packs",
+        "hideBuiltinDataPacks": "Hide built-in Data Packs",
+        "by": "by"
+    },
+    "jvmArgs": {
+        "intro": "The JVM was started with the following arguments:"
+    },
+    "configurations": {
+        "intro": "The server is using the following configuration settings:"
+    },
+    "extraMetadata": {
+        "intro": "Some extra metadata was provided by the platform:"
+    },
+    "world": {
+        "summary": "Summary",
+        "entityCounts": "Entity Counts",
+        "chunksLabel": "Chunks",
+        "entitiesLabel": "Entities",
+        "totalSuffix": " (total):",
+        "worldLabel": "World",
+        "previous": "Previous",
+        "next": "Next",
+        "regionOf": "Region #{{i}} (of {{n}})",
+        "chunkEntity_one": "({{count}} entity)",
+        "chunkEntity_other": "({{count}} entities)",
+        "more": "... and {{n}} more"
+    }
+}

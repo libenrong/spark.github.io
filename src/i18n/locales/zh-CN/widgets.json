@@ -1,0 +1,32 @@
+{
+    "sep": "，",
+    "title": {
+        "cpu": "CPU",
+        "memory": "内存",
+        "disk": "磁盘",
+        "ping": "延迟",
+        "tps": "TPS",
+        "mspt": "MSPT",
+        "gc": "GC"
+    },
+    "scope": {
+        "process": "进程",
+        "system": "系统",
+        "physical": "物理内存",
+        "swap": "交换分区",
+        "during": "分析期间",
+        "all": "全部"
+    },
+    "stat": {
+        "min": "最小",
+        "med": "中位数",
+        "pct95": "95 分位",
+        "max": "最大",
+        "oneMin": "1 分钟",
+        "fiveMin": "5 分钟",
+        "fifteenMin": "15 分钟",
+        "total": "总计",
+        "avgTime": "平均耗时",
+        "avgFreq": "平均频率"
+    }
+}

@@ -1,9 +1,11 @@
+import { useTranslation } from 'react-i18next';
 import { convertSeries, Metric, MetricProps } from '../Metric';
 import MetricGraph from '../MetricGraph';
 
 const intFormat = (value: number) => value.toFixed(0);
 
 export default function WorldMetric({ metrics, timeRange }: MetricProps) {
+    const { t } = useTranslation('metrics');
     const playersData = convertSeries(
         metrics.worldInfo,
         v => v.players,
@@ -29,17 +31,29 @@ export default function WorldMetric({ metrics, timeRange }: MetricProps) {
         return null;
 
     return (
-        <Metric title="World">
+        <Metric title={t('title.world')}>
             <MetricGraph
                 series={[
-                    { name: 'Players', data: playersData, color: '#b72c7d' },
-                    { name: 'Entities', data: entitiesData, color: '#fc704f' },
                     {
-                        name: 'Tile Entities',
+                        name: t('series.players'),
+                        data: playersData,
+                        color: '#b72c7d',
+                    },
+                    {
+                        name: t('series.entities'),
+                        data: entitiesData,
+                        color: '#fc704f',
+                    },
+                    {
+                        name: t('series.tileEntities'),
                         data: tileEntitiesData,
                         color: '#addcff',
                     },
-                    { name: 'Chunks', data: chunksData, color: '#a1a1a1' },
+                    {
+                        name: t('series.chunks'),
+                        data: chunksData,
+                        color: '#a1a1a1',
+                    },
                 ]}
                 format={intFormat}
             />

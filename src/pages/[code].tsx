@@ -1,63 +1,29 @@
-import { GetServerSidePropsContext } from 'next';
-import dynamic from 'next/dynamic';
-import Head from 'next/head';
-import { Suspense } from 'react';
-import SparkLayout from '../components/SparkLayout';
-import TextBox from '../components/TextBox';
-import { env } from '../env';
+import { GetStaticPaths, GetStaticProps } from 'next';
+import { useRouter } from 'next/router';
+import ViewerPageContent from '../components/ViewerPageContent';
 
-const SparkViewer = dynamic(() => import('../viewer/SparkViewer'));
-
-interface ViewerPageProps {
-    code: string;
+export default function ViewerPage() {
+    const router = useRouter();
+    const code = (router.query['code'] as string) ?? '';
+    return <ViewerPageContent code={code} />;
 }
 
-export default function ViewerPage({ code }: ViewerPageProps) {
-    return (
-        <>
-            {code !== '_' && <ThumbnailMetaTags code={code} />}
-            <Suspense
-                fallback={
-                    <SparkLayout>
-                        <TextBox>Loading...</TextBox>
-                    </SparkLayout>
-                }
-            >
-                <SparkViewer />
-            </Suspense>
-        </>
-    );
-}
-
-const ThumbnailMetaTags = ({ code }: ViewerPageProps) => {
-    return (
-        <Head>
-            <title>{`spark | ${code}`}</title>
-            <meta
-                property="og:image"
-                content={`${env.NEXT_PUBLIC_SPARK_BASE_URL}/thumb/${code}.png`}
-                key="og-image"
-            />
-            <meta
-                name="twitter:image"
-                content={`${env.NEXT_PUBLIC_SPARK_BASE_URL}/thumb/${code}.png`}
-                key="twitter-image"
-            />
-            <meta
-                name="twitter:card"
-                content="summary_large_image"
-                key="twitter-card"
-            />
-        </Head>
-    );
+// no data is fetched at build/request time - the viewer loads the profile
+// from bytebin client-side. getStaticProps is only required so that
+// getStaticPaths is accepted by Next.
+export const getStaticProps: GetStaticProps = async () => {
+    return { props: {} };
 };
 
-// Just pass the query parameter to the component during SSR
-// (seems like a bit of a waste, but it's the only way as this page is a dynamic route)
-export async function getServerSideProps({
-    query,
-    res,
-}: GetServerSidePropsContext) {
-    res.setHeader('Cache-Control', 'public, maxage=31536000');
-    return { props: { code: query.code } };
-}
+/**
+ * In server (standalone) mode, arbitrary codes are rendered on demand.
+ * In static export mode (GitHub Pages) no codes can be enumerated at build
+ * time - the 404 page renders the viewer content from the pathname instead,
+ * so this route emits nothing.
+ */
+export const getStaticPaths: GetStaticPaths = async () => {
+    if (process.env.NEXT_PUBLIC_STATIC_EXPORT === '1') {
+        return { paths: [], fallback: false };
+    }
+    return { paths: [], fallback: 'blocking' };
+};

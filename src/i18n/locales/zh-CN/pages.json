@@ -1,0 +1,76 @@
+{
+    "nav": {
+        "downloads": {
+            "title": "下载",
+            "description": "下载最新版本的 spark。"
+        },
+        "docs": {
+            "title": "文档",
+            "description": "阅读文档与使用指南。"
+        }
+    },
+    "about": {
+        "heading": "关于",
+        "intro": "spark 是一款性能分析器，由三个主要部分组成。",
+        "links": "更多关于 spark 的信息，请访问 <github>GitHub</github>，或加入我们的 <discord>Discord</discord> 一起交流。"
+    },
+    "features": {
+        "profiler": {
+            "title": "性能分析器",
+            "description": "spark 内置性能分析器，可帮助诊断性能问题与瓶颈。"
+        },
+        "memory": {
+            "title": "内存检查",
+            "description": "spark 可以生成完整的堆转储，展示占用内存最多的部分，并监控 GC 活动。"
+        },
+        "health": {
+            "title": "健康报告",
+            "description": "spark 会监控并报告多项关键指标，便于长期跟踪性能变化。"
+        }
+    },
+    "viewer": {
+        "heading": "查看器",
+        "intro": "本网站也是 spark 数据的在线查看器。",
+        "usageIntro": "使用方法：",
+        "steps": {
+            "step1": "使用相应的 spark 命令生成<profile>性能分析报告</profile>或<heapSummary>堆内存摘要</heapSummary>。",
+            "step2": "数据上传完成后，点击链接打开查看器。"
+        },
+        "localFiles": "你也可以生成或导出 <code>.sparkprofile</code> 或 <code>.sparkheap</code> 文件，然后将其拖放到下方的方框中打开。",
+        "opensource": "本网站/查看器使用 JavaScript 和 React 框架编写，并已在 GitHub 开源，欢迎提交 Pull Request！"
+    },
+    "downloads": {
+        "heading": "下载",
+        "error": "错误：无法获取版本信息。",
+        "unknown": "未知",
+        "latest": "spark 的最新版本为 <version>v{{version}}</version>，构建于 {{timestamp}}。",
+        "docs": "安装好 spark 后，前往<link>文档</link>了解使用方法！",
+        "paperNote": "注意：spark 已随 Paper 1.21+ 预装，无需再安装插件！",
+        "logoAlt": "{{name}} 徽标",
+        "otherPlatforms": {
+            "title": "其他平台",
+            "intro": "spark 也提供适用于其他一些平台的版本。这些发行版按现状提供，由社区提供支持。更多信息请查看 GitHub 上的 <link>spark-extra-platforms</link>。"
+        },
+        "recentChanges": {
+            "title": "近期更新",
+            "more": "还有更多！查看<link>完整更新日志</link>。"
+        },
+        "olderVersions": {
+            "title": "历史版本",
+            "intro": "以下为旧版 Minecraft 提供的发行版。它们不再获得积极支持，但应该仍可正常使用 :)",
+            "note": "（注意：上述链接将在新标签页中打开 CurseForge.com）"
+        }
+    },
+    "changelog": {
+        "heading": "更新日志",
+        "error": "错误：无法获取更新日志。",
+        "intro": "以下列出了 <repo>spark Git 仓库</repo> 中最近提交的更改。",
+        "downloadsLink": "前往<link>下载</link>页面获取最新版本。"
+    },
+    "viewerPage": {
+        "title": "spark | {{code}}"
+    },
+    "thumbnail": {
+        "loading": "加载中…"
+    }
+}

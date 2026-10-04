@@ -1,3 +1,5 @@
+import { useTranslation } from 'react-i18next';
+import i18n from '../../../../../i18n';
 import { SystemStatistics_Cpu_Usage } from '../../../../proto/spark_pb';
 import { Formatter, WidgetFormat } from '../format';
 import Widget from '../Widget';
@@ -9,6 +11,7 @@ export interface CpuWidgetProps {
 }
 
 export default function CpuWidget({ cpu, label }: CpuWidgetProps) {
+    const { t } = useTranslation('widgets');
     const formatter: Formatter = {
         color: value => {
             if (value > 0.9) {
@@ -21,7 +24,7 @@ export default function CpuWidget({ cpu, label }: CpuWidgetProps) {
         },
         format: value => {
             return (
-                (value * 100).toLocaleString('en-US', {
+                (value * 100).toLocaleString(i18n.language, {
                     maximumFractionDigits: 2,
                 }) + '%'
             );
@@ -29,9 +32,14 @@ export default function CpuWidget({ cpu, label }: CpuWidgetProps) {
     };
 
     return (
-        <Widget title="CPU" label={label} formatter={formatter}>
-            <WidgetValue value={cpu.last1M} label="1m" />
-            <WidgetValue value={cpu.last15M} label="15m" />
+        <Widget
+            id="cpu"
+            title={t('title.cpu')}
+            label={label}
+            formatter={formatter}
+        >
+            <WidgetValue value={cpu.last1M} label={t('stat.oneMin')} />
+            <WidgetValue value={cpu.last15M} label={t('stat.fifteenMin')} />
         </Widget>
     );
 }

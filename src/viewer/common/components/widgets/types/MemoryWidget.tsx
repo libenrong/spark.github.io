@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next';
 import {
     MemoryUsage,
     SystemStatistics_Memory_MemoryPool,
@@ -13,6 +14,7 @@ export interface MemoryWidgetProps {
 }
 
 export default function MemoryWidget({ memory, label }: MemoryWidgetProps) {
+    const { t } = useTranslation('widgets');
     const formatter: Formatter = {
         color: (value, total) => {
             const percent = value / total;
@@ -34,7 +36,12 @@ export default function MemoryWidget({ memory, label }: MemoryWidgetProps) {
         (memory as SystemStatistics_Memory_MemoryPool).total;
 
     return (
-        <Widget title="Memory" label={label} formatter={formatter}>
+        <Widget
+            id="memory"
+            title={t('title.memory')}
+            label={label}
+            formatter={formatter}
+        >
             <WidgetSingleValue value={memory.used} total={total} />
         </Widget>
     );

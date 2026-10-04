@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next';
 import {
     MemoryUsage,
     PlatformStatistics_Gc,
@@ -15,12 +16,18 @@ export default function MemoryStatistics({
     memory,
     gc,
 }: MemoryStatisticsProps) {
+    const { t } = useTranslation('metadata');
     return (
         <>
             <div className="memory">
-                {memory.heap && <MemoryPool name="Heap" usage={memory.heap} />}
+                {memory.heap && (
+                    <MemoryPool name={t('memory.heap')} usage={memory.heap} />
+                )}
                 {memory.nonHeap && (
-                    <MemoryPool name="Non Heap" usage={memory.nonHeap} />
+                    <MemoryPool
+                        name={t('memory.nonHeap')}
+                        usage={memory.nonHeap}
+                    />
                 )}
                 {(memory.pools || [])
                     .filter(pool => pool.usage)
@@ -28,7 +35,7 @@ export default function MemoryStatistics({
                         return (
                             <MemoryPool
                                 key={pool.name}
-                                name={'Heap - ' + pool.name}
+                                name={t('memory.pool', { name: pool.name })}
                                 usage={pool.usage!}
                                 collectionUsage={pool.collectionUsage}
                             />
@@ -46,6 +53,7 @@ interface MemoryPoolProps {
 }
 
 const MemoryPool = ({ name, usage, collectionUsage }: MemoryPoolProps) => {
+    const { t } = useTranslation('metadata');
     return (
         <div className="memory-pool">
             <div className="header">{name}</div>
@@ -53,7 +61,9 @@ const MemoryPool = ({ name, usage, collectionUsage }: MemoryPoolProps) => {
             {collectionUsage && (
                 <div>
                     <br />
-                    <div className="header">{name} (at last GC)</div>
+                    <div className="header">
+                        {t('memory.atLastGC', { name })}
+                    </div>
                     <MemoryUsageBar {...collectionUsage} />
                 </div>
             )}
@@ -62,6 +72,7 @@ const MemoryPool = ({ name, usage, collectionUsage }: MemoryPoolProps) => {
 };
 
 const MemoryUsageBar = ({ used, committed, max }: MemoryUsage) => {
+    const { t } = useTranslation('metadata');
     let percent;
     if (max && max > 0) {
         percent = used / max;
@@ -90,14 +101,15 @@ const MemoryUsageBar = ({ used, committed, max }: MemoryUsage) => {
             </div>
             <ul>
                 <li>
-                    Used: <span>{formatBytes(used)}</span>
+                    {t('memory.used')} <span>{formatBytes(used)}</span>
                 </li>
                 <li>
-                    Committed: <span>{formatBytes(committed)}</span>
+                    {t('memory.committed')}{' '}
+                    <span>{formatBytes(committed)}</span>
                 </li>
                 {max !== -1 && max !== committed && (
                     <li>
-                        Max: <span>{formatBytes(max)}</span>
+                        {t('memory.max')} <span>{formatBytes(max)}</span>
                     </li>
                 )}
             </ul>

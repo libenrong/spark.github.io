@@ -1,0 +1,105 @@
+{
+    "heading": "元数据",
+    "description": "下方面板展示了平台、系统与世界的相关元数据/信息。可通过下方的按钮在不同视图之间切换。",
+    "unknownView": "未知视图。",
+    "tabs": {
+        "platform": "平台",
+        "memory": "内存",
+        "network": "网络",
+        "jvmArgs": "JVM 参数",
+        "configurations": "配置",
+        "world": "世界",
+        "misc": "其他",
+        "gameRules": "游戏规则",
+        "plugins": "插件/模组"
+    },
+    "punctuation": {
+        "dot": "。",
+        "colon": "："
+    },
+    "platformType": {
+        "server": "服务端",
+        "client": "客户端",
+        "proxy": "代理端",
+        "application": "应用"
+    },
+    "platform": {
+        "intro": "该平台为 <brand>{{brand}}</brand> {{platformType}}，运行版本“<version>{{version}}</version>”。",
+        "introSystem": "该系统为 <brand>{{brand}}</brand> {{platformType}}，运行 spark 版本“<version>{{version}}</version>”。",
+        "minecraftVersion": "检测到的 Minecraft 版本为“<version>{{version}}</version>”。",
+        "onlineMode": "{{platformType}}运行于<mode>{{onlineMode}}</mode>。",
+        "playerCount": "分析完成时{{platformType}}的玩家数为 <count>{{count}}</count>。",
+        "profilerRun": "分析器{{engine}}已运行 <duration>{{duration}}</duration>",
+        "profilerTicks": "（<count>{{count}}</count> 个 tick）",
+        "profilerExceeded": "，其中 <count>{{count}}</count> 个 tick 超出了“仅统计超过”阈值。",
+        "engineAsync": "（引擎 async）",
+        "engineJava": "（引擎 java）",
+        "os": "系统运行 <os>{{os}}</os>（<arch>{{arch}}</arch>）版本“<version>{{version}}</version>”，共有 <threads>{{threads}}</threads> 个 CPU 线程可用。",
+        "cpu": "CPU 型号为 <model>{{model}}</model>。",
+        "java": "进程使用 Java <version>{{version}}</version>（<vendorVersion>{{vendorVersion}}</vendorVersion>，来自 <vendor>{{vendor}}</vendor>）。",
+        "jvm": " JVM 为 <name>{{name}}</name>。",
+        "uptime": "当前进程运行时长为 <duration>{{duration}}</duration>。"
+    },
+    "memory": {
+        "heap": "堆内存",
+        "nonHeap": "非堆内存",
+        "pool": "堆内存 - {{name}}",
+        "atLastGC": "{{name}}（上次 GC 时）",
+        "used": "已用：",
+        "committed": "已提交：",
+        "max": "最大："
+    },
+    "network": {
+        "note": "注意：下方统计为系统级别数据（包含同一台机器上其他进程的流量）。",
+        "transmit": "发送",
+        "receive": "接收",
+        "bytesPerSec": "字节/秒",
+        "packetsPerSec": "包/秒",
+        "min": "最小",
+        "med": "中位数",
+        "pct95": "95 分位",
+        "max": "最大"
+    },
+    "gamerules": {
+        "allDefault": "所有游戏规则均为默认值。",
+        "overridesHeading": "游戏规则修改项",
+        "overridesNote": "（仅显示与默认值不同的规则）",
+        "ruleDefault": "{{name}}（默认值：<value></value>）",
+        "showDefaults": "显示默认值",
+        "hideDefaults": "隐藏默认值",
+        "defaultsHeading": "游戏规则默认值",
+        "defaultsNote": "（每条游戏规则的默认值）"
+    },
+    "plugins": {
+        "heading": "插件/模组",
+        "dataPacksHeading": "数据包",
+        "showBuiltinPlugins": "显示内置插件",
+        "hideBuiltinPlugins": "隐藏内置插件",
+        "showBuiltinDataPacks": "显示内置数据包",
+        "hideBuiltinDataPacks": "隐藏内置数据包",
+        "by": "作者"
+    },
+    "jvmArgs": {
+        "intro": "JVM 使用以下参数启动："
+    },
+    "configurations": {
+        "intro": "服务端使用以下配置项："
+    },
+    "extraMetadata": {
+        "intro": "平台提供了以下额外元数据："
+    },
+    "world": {
+        "summary": "汇总",
+        "entityCounts": "实体统计",
+        "chunksLabel": "区块",
+        "entitiesLabel": "实体",
+        "totalSuffix": "（总计）：",
+        "worldLabel": "世界",
+        "previous": "上一个",
+        "next": "下一个",
+        "regionOf": "区域 #{{i}}（共 {{n}} 个）",
+        "chunkEntity_one": "（{{count}} 个实体）",
+        "chunkEntity_other": "（{{count}} 个实体）",
+        "more": "…还有 {{n}} 个"
+    }
+}

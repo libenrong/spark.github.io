@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next';
 import ConfigurationObject from './ConfigurationObject';
 
 export interface ExtraPlatformMetadataProps {
@@ -7,9 +8,10 @@ export interface ExtraPlatformMetadataProps {
 export default function ExtraPlatformMetadata({
     data,
 }: ExtraPlatformMetadataProps) {
+    const { t } = useTranslation('metadata');
     return (
         <div className="configurations">
-            <p>Some extra metadata was provided by the platform:</p>
+            <p>{t('extraMetadata.intro')}</p>
             <ConfigurationObject data={data} />
         </div>
     );

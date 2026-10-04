@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next';
 import { SystemStatistics as SystemStatisticsProto } from '../../../../proto/spark_pb';
 
 export interface JvmStartupArgsProps {
@@ -7,9 +8,10 @@ export interface JvmStartupArgsProps {
 export default function JvmStartupArgs({
     systemStatistics,
 }: JvmStartupArgsProps) {
+    const { t } = useTranslation('metadata');
     return (
         <p>
-            The JVM was started with the following arguments:
+            {t('jvmArgs.intro')}
             <br />
             <br />
             <span

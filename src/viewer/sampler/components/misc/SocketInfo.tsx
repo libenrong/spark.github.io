@@ -1,5 +1,6 @@
 import { faCloud } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { Trans } from 'react-i18next';
 import TextBox from '../../../../components/TextBox';
 
 import styles from '../../../../style/sampler.module.scss';
@@ -15,20 +16,35 @@ export default function SocketInfo({ socket }: SocketInfoProps) {
     return (
         <TextBox extraClassName={styles['socket-info']}>
             <h2>
-                <FontAwesomeIcon icon={faCloud} /> <b>Connected</b> via
-                WebSocket
+                <FontAwesomeIcon icon={faCloud} />{' '}
+                <Trans
+                    ns="sampler"
+                    i18nKey="socket.connected"
+                    components={{ b: <b /> }}
+                />
             </h2>
             <p>
-                spark viewer is connected to the spark profiler using a socket
-                connection. <br />
-                The statistics will update every{' '}
-                {settings?.statisticsInterval ?? '?'} seconds, and the profiler
-                data will update every minute.
+                <Trans
+                    ns="sampler"
+                    i18nKey="socket.description"
+                    values={{ interval: settings?.statisticsInterval ?? '?' }}
+                    components={{ br: <br /> }}
+                />
             </p>
             <p>
-                <b>Latency</b>: {latency ?? '?'}ms
+                <Trans
+                    ns="sampler"
+                    i18nKey="socket.latency"
+                    values={{ value: latency ?? '?' }}
+                    components={{ b: <b /> }}
+                />
                 <br />
-                <b>Client ID</b>: {clientId}
+                <Trans
+                    ns="sampler"
+                    i18nKey="socket.clientId"
+                    values={{ id: clientId ?? '' }}
+                    components={{ b: <b /> }}
+                />
             </p>
         </TextBox>
     );

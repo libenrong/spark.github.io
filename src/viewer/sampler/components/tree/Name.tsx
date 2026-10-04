@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next';
 import {
     NodeDetails,
     StackTraceNodeDetails,
@@ -28,12 +29,13 @@ const StackTraceName = ({
     details,
     mappings,
 }: NameProps<StackTraceNodeDetails>) => {
+    const { t } = useTranslation('sampler');
     const resolved = mappings.resolve(details);
     if (resolved.type === 'native') {
         return (
             <>
                 <span className="native-part">{details.methodName}</span>
-                <span className="package-part"> (native)</span>
+                <span className="package-part">{t('native')}</span>
             </>
         );
     }

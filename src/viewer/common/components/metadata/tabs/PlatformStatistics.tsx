@@ -1,3 +1,4 @@
+import { Trans, useTranslation } from 'react-i18next';
 import {
     PlatformMetadata,
     PlatformStatistics as PlatformStatisticsProto,
@@ -29,31 +30,61 @@ export default function PlatformStatistics({
     numberOfIncludedTicks,
     engine,
 }: PlatformStatisticsProps) {
+    const { t } = useTranslation('metadata');
+    const platformTypeLabel = t(`platformType.${platformType}`);
+
     return (
         <>
             <p>
-                The {platformType === 'application' ? 'system' : 'platform'} is
-                a <span>{platform.brand || platform.name}</span> {platformType}{' '}
-                running {platformType === 'application' ? 'spark' : ''} version
-                &quot;
-                <span>{platform.version}</span>&quot;.
+                <Trans
+                    ns="metadata"
+                    i18nKey={
+                        platformType === 'application'
+                            ? 'platform.introSystem'
+                            : 'platform.intro'
+                    }
+                    values={{
+                        brand: platform.brand || platform.name,
+                        platformType: platformTypeLabel,
+                        version: platform.version,
+                    }}
+                    components={{ brand: <span />, version: <span /> }}
+                />
             </p>
             {platform.minecraftVersion && (
                 <p>
-                    The detected Minecraft version is &quot;
-                    <span>{platform.minecraftVersion}</span>&quot;.
+                    <Trans
+                        ns="metadata"
+                        i18nKey="platform.minecraftVersion"
+                        values={{ version: platform.minecraftVersion }}
+                        components={{ version: <span /> }}
+                    />
                 </p>
             )}
             {onlineMode && (
                 <p>
-                    The {platformType} is running in <span>{onlineMode}</span>.
+                    <Trans
+                        ns="metadata"
+                        i18nKey="platform.onlineMode"
+                        values={{
+                            platformType: platformTypeLabel,
+                            onlineMode: t(`common:onlineMode.${onlineMode}`),
+                        }}
+                        components={{ mode: <span /> }}
+                    />
                 </p>
             )}
             {platformStatistics?.playerCount > 0 && (
                 <p>
-                    The {platformType} had a player count of{' '}
-                    <span>{platformStatistics.playerCount}</span> when the
-                    profile completed.
+                    <Trans
+                        ns="metadata"
+                        i18nKey="platform.playerCount"
+                        values={{
+                            platformType: platformTypeLabel,
+                            count: platformStatistics.playerCount,
+                        }}
+                        components={{ count: <span /> }}
+                    />
                 </p>
             )}
             {!!systemStatistics && (
@@ -61,34 +92,39 @@ export default function PlatformStatistics({
             )}
             {runningTime && (
                 <p>
-                    The profiler{' '}
-                    {engine ? (
-                        <>
-                            (engine{' '}
-                            <span>
-                                {engine == SamplerMetadata_SamplerEngine.ASYNC
-                                    ? 'async'
-                                    : 'java'}
-                            </span>
-                            ){' '}
-                        </>
-                    ) : (
-                        ''
-                    )}
-                    was running for <span>{formatDuration(runningTime)}</span>
+                    <Trans
+                        ns="metadata"
+                        i18nKey="platform.profilerRun"
+                        values={{
+                            engine: engine
+                                ? t(
+                                      engine ==
+                                          SamplerMetadata_SamplerEngine.ASYNC
+                                          ? 'platform.engineAsync'
+                                          : 'platform.engineJava'
+                                  )
+                                : '',
+                            duration: formatDuration(runningTime),
+                        }}
+                        components={{ duration: <span /> }}
+                    />
                     {!!numberOfTicks && (
-                        <>
-                            {' '}
-                            (<span>{numberOfTicks}</span> ticks)
-                        </>
+                        <Trans
+                            ns="metadata"
+                            i18nKey="platform.profilerTicks"
+                            values={{ count: numberOfTicks }}
+                            components={{ count: <span /> }}
+                        />
                     )}
-                    .
-                    {!!numberOfIncludedTicks && (
-                        <>
-                            {' '}
-                            <span>{numberOfIncludedTicks}</span> ticks exceeded
-                            the &#39;only ticks over&#39; threshold.
-                        </>
+                    {!!numberOfIncludedTicks ? (
+                        <Trans
+                            ns="metadata"
+                            i18nKey="platform.profilerExceeded"
+                            values={{ count: numberOfIncludedTicks }}
+                            components={{ count: <span /> }}
+                        />
+                    ) : (
+                        t('punctuation.dot')
                     )}
                 </p>
             )}
@@ -101,36 +137,70 @@ interface SystemStatisticsProps {
 }
 
 const SystemStatistics = ({ systemStatistics }: SystemStatisticsProps) => {
+    const { t } = useTranslation('metadata');
     return (
         <>
             <p>
-                The system is running <span>{systemStatistics.os!.name}</span> (
-                <span>{systemStatistics.os!.arch}</span>) version &quot;
-                <span>{systemStatistics.os!.version}</span>&quot; and has{' '}
-                <span>{systemStatistics.cpu!.threads}</span> CPU threads
-                available.
+                <Trans
+                    ns="metadata"
+                    i18nKey="platform.os"
+                    values={{
+                        os: systemStatistics.os!.name,
+                        arch: systemStatistics.os!.arch,
+                        version: systemStatistics.os!.version,
+                        threads: systemStatistics.cpu!.threads,
+                    }}
+                    components={{
+                        os: <span />,
+                        arch: <span />,
+                        version: <span />,
+                        threads: <span />,
+                    }}
+                />
             </p>
             {systemStatistics.cpu!.modelName && (
                 <p>
-                    The CPU is described as an{' '}
-                    <span>{systemStatistics.cpu!.modelName}</span>.
+                    <Trans
+                        ns="metadata"
+                        i18nKey="platform.cpu"
+                        values={{ model: systemStatistics.cpu!.modelName }}
+                        components={{ model: <span /> }}
+                    />
                 </p>
             )}
             <p>
-                The process is using Java{' '}
-                <span>{systemStatistics.java!.version}</span> (
-                <span>{systemStatistics.java!.vendorVersion}</span> from{' '}
-                <span>{systemStatistics.java!.vendor}</span>).
+                <Trans
+                    ns="metadata"
+                    i18nKey="platform.java"
+                    values={{
+                        version: systemStatistics.java!.version,
+                        vendorVersion: systemStatistics.java!.vendorVersion,
+                        vendor: systemStatistics.java!.vendor,
+                    }}
+                    components={{
+                        version: <span />,
+                        vendorVersion: <span />,
+                        vendor: <span />,
+                    }}
+                />
                 {systemStatistics.jvm?.name && (
-                    <>
-                        {' '}
-                        The JVM is a <span>{systemStatistics.jvm?.name}</span>.
-                    </>
+                    <Trans
+                        ns="metadata"
+                        i18nKey="platform.jvm"
+                        values={{ name: systemStatistics.jvm?.name }}
+                        components={{ name: <span /> }}
+                    />
                 )}
             </p>
             <p>
-                The current process uptime is{' '}
-                <span>{formatDuration(systemStatistics.uptime)}</span>.
+                <Trans
+                    ns="metadata"
+                    i18nKey="platform.uptime"
+                    values={{
+                        duration: formatDuration(systemStatistics.uptime),
+                    }}
+                    components={{ duration: <span /> }}
+                />
             </p>
         </>
     );

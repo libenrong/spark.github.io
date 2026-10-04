@@ -1,4 +1,5 @@
 import { ChangeEvent, Dispatch, SetStateAction } from 'react';
+import { useTranslation } from 'react-i18next';
 
 export interface SearchBarProps {
     searchQuery: string;
@@ -9,6 +10,8 @@ export default function SearchBar({
     searchQuery,
     setSearchQuery,
 }: SearchBarProps) {
+    const { t } = useTranslation('heap');
+
     function onQueryChanged(e: ChangeEvent<HTMLInputElement>) {
         setSearchQuery(e.target.value.toLowerCase());
     }
@@ -19,6 +22,7 @@ export default function SearchBar({
             type="text"
             value={searchQuery}
             onChange={onQueryChanged}
+            placeholder={t('searchPlaceholder')}
         ></input>
     );
 }

@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next';
 import {
     VictoryAxis,
     VictoryChart,
@@ -20,6 +21,7 @@ export interface MetricGraphProps {
 }
 
 export default function MetricGraph({ series, format }: MetricGraphProps) {
+    const { t } = useTranslation('metrics');
     const flyoutHeight = 25 + 15 * series.length;
     const flyoutWidth = 200;
     const flyoutOffset = { x: flyoutWidth / 2, y: flyoutHeight / 2 };
@@ -41,7 +43,10 @@ export default function MetricGraph({ series, format }: MetricGraphProps) {
                             voronoiDimension="x"
                             mouseFollowTooltips
                             labels={({ datum }) =>
-                                `${datum.childName}: ${format(datum.y)}`
+                                t('tooltip', {
+                                    name: datum.childName,
+                                    value: format(datum.y),
+                                })
                             }
                             labelComponent={
                                 <VictoryTooltip

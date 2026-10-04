@@ -1,5 +1,6 @@
 import { faEye } from '@fortawesome/free-solid-svg-icons';
 import { Dispatch, SetStateAction } from 'react';
+import { useTranslation } from 'react-i18next';
 import FaButton from '../../../../components/FaButton';
 import { SamplerMetadata } from '../../../proto/spark_pb';
 import { View, VIEW_ALL, VIEW_FLAT, VIEW_SOURCES } from '../views/types';
@@ -17,6 +18,8 @@ export default function ToggleViewButton({
     setView,
     sourcesViewSupported,
 }: ToggleViewButtonProps) {
+    const { t } = useTranslation('sampler');
+
     const supportedViews: View[] = [
         VIEW_ALL,
         VIEW_FLAT,
@@ -30,13 +33,13 @@ export default function ToggleViewButton({
                     setView(v);
                 }
 
-                let label;
+                let id;
                 if (v === VIEW_ALL) {
-                    label = 'all';
+                    id = 'all';
                 } else if (v === VIEW_FLAT) {
-                    label = 'flat';
+                    id = 'flat';
                 } else {
-                    label = ['Fabric', 'Forge', 'NeoForge'].includes(
+                    id = ['Fabric', 'Forge', 'NeoForge'].includes(
                         metadata?.platform?.name || ''
                     )
                         ? 'mods'
@@ -45,17 +48,17 @@ export default function ToggleViewButton({
 
                 return (
                     <FaButton
-                        key={label}
+                        key={id}
                         icon={faEye}
                         onClick={onClick}
-                        title="Toggle the view"
+                        title={t('controls.toggleView')}
                         extraClassName={
                             view === v
                                 ? 'sources-view-button toggled'
                                 : 'sources-view-button'
                         }
                     >
-                        <span>{label}</span>
+                        <span>{t(`views.${id}`)}</span>
                     </FaButton>
                 );
             })}

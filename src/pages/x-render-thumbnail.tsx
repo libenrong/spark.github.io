@@ -1,6 +1,7 @@
 import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router';
 import { Suspense, useEffect, useMemo, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { SparkContentType } from '../viewer/common/logic/contentType';
 import { fetchFromBytebin } from '../viewer/common/logic/fetch';
 import {
@@ -16,6 +17,7 @@ const Thumbnail = dynamic(
 
 const RenderThumbnail: NextPageWithLayout = () => {
     const router = useRouter();
+    const { t } = useTranslation('pages');
 
     const code = useMemo(() => {
         return router.query['code'] as string;
@@ -54,7 +56,7 @@ const RenderThumbnail: NextPageWithLayout = () => {
         );
     }
 
-    return <p>loading</p>;
+    return <p>{t('thumbnail.loading')}</p>;
 };
 
 export function parse(

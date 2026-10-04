@@ -1,0 +1,12 @@
+{
+    "title": "Heap Summary{{at}} | spark",
+    "at": " @ {{time}} {{date}}",
+    "createdBy": "Heap Summary created by <avatar></avatar>{{user}}",
+    "table": {
+        "rank": "Rank",
+        "instances": "Instances",
+        "size": "Size",
+        "type": "Type"
+    },
+    "searchPlaceholder": "Search by type"
+}

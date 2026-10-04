@@ -1,4 +1,5 @@
 import { NextPage } from 'next';
+import { useTranslation } from 'react-i18next';
 import TextBox from '../components/TextBox';
 
 interface ErrorPageProps {
@@ -6,11 +7,12 @@ interface ErrorPageProps {
 }
 
 const Error: NextPage<ErrorPageProps> = ({ statusCode }) => {
+    const { t } = useTranslation('common');
     return (
         <TextBox>
             {statusCode
-                ? `Server error ${statusCode}`
-                : 'Uh oh. An unexpected error occurred with spark-viewer client.'}
+                ? t('error.serverErrorWithCode', { statusCode })
+                : t('error.clientError')}
         </TextBox>
     );
 };

@@ -4,6 +4,7 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useMemo, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import {
     WorldStatistics_Region,
     WorldStatistics_World,
@@ -22,6 +23,7 @@ export interface WorldRegionSummaryProps {
 export default function WorldRegionSummary({
     worlds,
 }: WorldRegionSummaryProps) {
+    const { t } = useTranslation('metadata');
     const regions = useMemo(() => {
         const regions: Region[] = [];
         for (const world of worlds) {
@@ -63,30 +65,40 @@ export default function WorldRegionSummary({
     return (
         <div className="region-view">
             <div className="header region-selector">
-                <div className="button" onClick={previous} title="Previous">
+                <div
+                    className="button"
+                    onClick={previous}
+                    title={t('world.previous')}
+                >
                     <FontAwesomeIcon icon={faBackwardStep} />
                 </div>
                 <span>
-                    Region #{regionIdx + 1} (of {regions.length})
+                    {t('world.regionOf', {
+                        i: regionIdx + 1,
+                        n: regions.length,
+                    })}
                 </span>
-                <div className="button" onClick={next} title="Next">
+                <div className="button" onClick={next} title={t('world.next')}>
                     <FontAwesomeIcon icon={faForwardStep} />
                 </div>
             </div>
             <div className="detail-lists">
                 <div>
                     <p>
-                        <b>Entities</b> (<span>{region.totalEntities}</span>):
+                        <b>{t('world.entitiesLabel')}</b> (
+                        <span>{region.totalEntities}</span>):
                     </p>
                     <EntityCountsList entityCounts={combinedEntities} />
                 </div>
                 <div>
                     <p>
-                        <b>World</b>: {region.world}
+                        <b>{t('world.worldLabel')}</b>
+                        {t('punctuation.colon')} {region.world}
                     </p>
                     <br />
                     <p>
-                        <b>Chunks</b> (<span>{region.chunks.length}</span>):
+                        <b>{t('world.chunksLabel')}</b> (
+                        <span>{region.chunks.length}</span>):
                     </p>
                     <ChunkCountsList chunks={region.chunks} />
                 </div>

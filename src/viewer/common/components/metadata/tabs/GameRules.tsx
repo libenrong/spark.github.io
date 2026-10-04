@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { Trans, useTranslation } from 'react-i18next';
 import { WorldStatistics_GameRule } from '../../../../proto/spark_pb';
 
 export interface GameRulesProps {
@@ -6,6 +7,7 @@ export interface GameRulesProps {
 }
 
 export default function GameRules({ gameRules }: GameRulesProps) {
+    const { t } = useTranslation('metadata');
     const setRules = gameRules.filter(
         gameRule => !gameRuleIsDefaultInAllWorlds(gameRule)
     );
@@ -16,21 +18,28 @@ export default function GameRules({ gameRules }: GameRulesProps) {
         <div className="gamerules">
             {setRules.length === 0 && (
                 <>
-                    <p>All game rules are set to default values.</p>
+                    <p>{t('gamerules.allDefault')}</p>
                 </>
             )}
             {setRules.length > 0 && (
                 <>
-                    <h2>Game Rule Overrides</h2>
-                    <span>
-                        (Values are only shown below when they differ from the
-                        default)
-                    </span>
+                    <h2>{t('gamerules.overridesHeading')}</h2>
+                    <span>{t('gamerules.overridesNote')}</span>
                     <ul>
                         {setRules.map(gameRule => (
                             <li key={gameRule.name}>
-                                {gameRule.name} (default:{' '}
-                                <GameRuleValue value={gameRule.defaultValue} />)
+                                <Trans
+                                    ns="metadata"
+                                    i18nKey="gamerules.ruleDefault"
+                                    values={{ name: gameRule.name }}
+                                    components={{
+                                        value: (
+                                            <GameRuleValue
+                                                value={gameRule.defaultValue}
+                                            />
+                                        ),
+                                    }}
+                                />
                                 <ul>
                                     {Object.entries(gameRule.worldValues)
                                         .filter(
@@ -51,13 +60,17 @@ export default function GameRules({ gameRules }: GameRulesProps) {
             )}
 
             <button onClick={() => setShowDefaults(value => !value)}>
-                {showDefaults ? 'Hide' : 'Show'} default values
+                {t(
+                    showDefaults
+                        ? 'gamerules.hideDefaults'
+                        : 'gamerules.showDefaults'
+                )}
             </button>
 
             {showDefaults && (
                 <>
-                    <h2>Game Rule Defaults</h2>
-                    <span>(The default values for each game rule)</span>
+                    <h2>{t('gamerules.defaultsHeading')}</h2>
+                    <span>{t('gamerules.defaultsNote')}</span>
                     <ul>
                         {gameRules.map(gameRule => (
                             <li key={gameRule.name}>

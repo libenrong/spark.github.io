@@ -1,3 +1,4 @@
+import { useTranslation } from 'react-i18next';
 import { WorldStatistics_World } from '../../../../proto/spark_pb';
 
 interface ExtendedWorld extends WorldStatistics_World {
@@ -11,6 +12,7 @@ export interface WorldTotalChunksProps {
 export default function WorldTotalChunks({
     worldsInput,
 }: WorldTotalChunksProps) {
+    const { t } = useTranslation('metadata');
     const worlds = worldsInput as ExtendedWorld[];
 
     for (const world of worlds) {
@@ -28,7 +30,8 @@ export default function WorldTotalChunks({
     return (
         <>
             <p>
-                <b>Chunks</b> (total): <span>{totalChunks}</span>
+                <b>{t('world.chunksLabel')}</b>
+                {t('world.totalSuffix')} <span>{totalChunks}</span>
             </p>
             <ul>
                 {worlds

@@ -1,4 +1,5 @@
 import classNames from 'classnames';
+import { useTranslation } from 'react-i18next';
 import styles from '../../../../../style/widgets.module.scss';
 import {
     RollingAverageValues,
@@ -17,13 +18,10 @@ export interface NetworkStatisticsProps {
 export default function NetworkStatistics({
     systemStatistics,
 }: NetworkStatisticsProps) {
+    const { t } = useTranslation('metadata');
     return (
         <>
-            <p>
-                Note: the usage tracked below is captured at a system level
-                (includes data from other processes running on the same
-                machine).
-            </p>
+            <p>{t('network.note')}</p>
             <div>
                 {Object.entries(systemStatistics.net).map(([name, data]) => (
                     <NetworkInterface key={name} name={name} data={data} />
@@ -40,6 +38,7 @@ const NetworkInterface = ({
     name: string;
     data: SystemStatistics_NetInterface;
 }) => {
+    const { t } = useTranslation('metadata');
     return (
         <div>
             <h3>{name}</h3>
@@ -51,13 +50,15 @@ const NetworkInterface = ({
                 )}
             >
                 <NetworkInterfaceWidget
-                    direction="Transmit"
-                    format="bytes/sec"
+                    direction={t('network.transmit')}
+                    directionId="transmit"
+                    format={t('network.bytesPerSec')}
                     values={data.txBytesPerSecond!}
                 />
                 <NetworkInterfaceWidget
-                    direction="Receive"
-                    format="bytes/sec"
+                    direction={t('network.receive')}
+                    directionId="receive"
+                    format={t('network.bytesPerSec')}
                     values={data.rxBytesPerSecond!}
                 />
             </div>
@@ -69,13 +70,15 @@ const NetworkInterface = ({
                 )}
             >
                 <NetworkInterfaceWidget
-                    direction="Transmit"
-                    format="packets/sec"
+                    direction={t('network.transmit')}
+                    directionId="transmit"
+                    format={t('network.packetsPerSec')}
                     values={data.txPacketsPerSecond!}
                 />
                 <NetworkInterfaceWidget
-                    direction="Receive"
-                    format="packets/sec"
+                    direction={t('network.receive')}
+                    directionId="receive"
+                    format={t('network.packetsPerSec')}
                     values={data.rxPacketsPerSecond!}
                 />
             </div>
@@ -83,20 +86,21 @@ const NetworkInterface = ({
     );
 };
 
-type Direction = 'Transmit' | 'Receive';
-type StatFormat = 'bytes/sec' | 'packets/sec';
-
 interface NetworkInterfaceWidgetProps {
-    direction: Direction;
-    format: StatFormat;
+    direction: string;
+    directionId: string;
+    format: string;
     values: RollingAverageValues;
 }
 
 const NetworkInterfaceWidget = ({
     direction,
+    directionId,
     format,
     values,
 }: NetworkInterfaceWidgetProps) => {
+    const { t } = useTranslation('metadata');
+    const isBytes = format === t('network.bytesPerSec');
     const formatter: Formatter = {
         color: value => {
             if (value <= 0) {
@@ -106,7 +110,7 @@ const NetworkInterfaceWidget = ({
             return WidgetFormat.colors.green;
         },
         format: value => {
-            if (format === 'bytes/sec') {
+            if (isBytes) {
                 return formatBytes(value);
             } else {
                 return formatNumber(value);
@@ -115,11 +119,19 @@ const NetworkInterfaceWidget = ({
     };
 
     return (
-        <Widget title={direction} label={format} formatter={formatter}>
-            <WidgetValue value={values.min} label="min" />
-            <WidgetValue value={values.median} label="med" />
-            <WidgetValue value={values.percentile95} label="95%ile" />
-            <WidgetValue value={values.max} label="max" />
+        <Widget
+            id={directionId}
+            title={direction}
+            label={format}
+            formatter={formatter}
+        >
+            <WidgetValue value={values.min} label={t('network.min')} />
+            <WidgetValue value={values.median} label={t('network.med')} />
+            <WidgetValue
+                value={values.percentile95}
+                label={t('network.pct95')}
+            />
+            <WidgetValue value={values.max} label={t('network.max')} />
         </Widget>
     );
 };

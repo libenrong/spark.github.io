@@ -1,16 +1,8 @@
+import i18n from '../../../../i18n';
 import { WindowStatisticsKey } from './util';
 
 export function getAxisLabel(statisticName: WindowStatisticsKey) {
-    return {
-        tps: 'TPS',
-        msptMedian: 'MSPT',
-        cpuProcess: 'CPU (process)',
-        cpuSystem: 'CPU (system)',
-        players: 'Players',
-        entities: 'Entities',
-        tileEntities: 'Tile Entities',
-        chunks: 'Chunks',
-    }[statisticName];
+    return i18n.t(`sampler:refine.axis.${statisticName}`);
 }
 
 export function getColor(statisticName: WindowStatisticsKey) {
