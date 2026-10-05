@@ -53,6 +53,8 @@
         "apiKey": "API Key",
         "apiKeyPlaceholder": "sk-…",
         "keyNote": "API Key 仅保存在本浏览器（localStorage）中，并且只会发送到上方配置的接口地址。",
+        "sendConfigs": "发送配置文件内容",
+        "configWarning": "默认关闭。开启后会把服务器配置文件的原始内容发送给模型，可能包含敏感信息（如密码）。",
         "run": "开始分析",
         "rerun": "重新分析",
         "running": "分析中…",
@@ -60,6 +62,9 @@
         "copy": "复制",
         "copied": "已复制！",
         "thinking": "正在等待模型响应…",
+        "askPlaceholder": "继续追问这个报告…",
+        "send": "发送",
+        "asking": "回答中…",
         "placeholder": "在上方填写 API Key，点击「开始分析」获取此报告的性能热点分析与优化建议。",
         "errorConfig": "请先填写 API 地址、模型和 API Key。",
         "emptyResponse": "连接成功，但模型没有返回任何内容，请检查模型名称和 API 地址。",
@@ -73,6 +78,7 @@
             "gc": "垃圾回收",
             "diagnosis": "问题诊断",
             "hotspots": "热点方法",
+            "configSuggestions": "配置修改建议",
             "steps": "优先处理"
         },
         "status": {
@@ -109,6 +115,9 @@
         },
         "hotspots": {
             "internal": "内部"
+        },
+        "config": {
+            "reason": "原因"
         },
         "valueLabels": {
             "1m": "1分钟",

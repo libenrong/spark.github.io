@@ -11,6 +11,14 @@ const TOP_SOURCES = 15;
 const TOP_ENTITIES = 10;
 const MAX_WINDOWS = 12;
 const MAX_JSON_CHARS = 60_000;
+const MAX_CONFIG_FILES = 20;
+const MAX_CONFIG_FILE_CHARS = 20_000;
+const MAX_CONFIG_TOTAL_CHARS = 80_000;
+
+export interface ProfileSummaryOptions {
+    /** include the raw contents of server config files (opt-in) */
+    includeConfigs?: boolean;
+}
 
 interface MethodEntry {
     method: string;
@@ -45,11 +53,38 @@ function nodeSelfTime(node: { time: number; children: { time: number }[] }) {
 }
 
 /**
+ * Collects the raw server config file contents, bounded in both per-file and
+ * total size. Values are sent verbatim (opt-in) - they may contain secrets.
+ */
+function buildConfigurations(
+    map: Record<string, string> | undefined
+): Record<string, string> | undefined {
+    if (!map) return undefined;
+    const out: Record<string, string> = {};
+    let total = 0;
+    let count = 0;
+    for (const [name, raw] of Object.entries(map)) {
+        if (count >= MAX_CONFIG_FILES) break;
+        if (typeof raw !== 'string') continue;
+        const trimmed =
+            raw.length > MAX_CONFIG_FILE_CHARS
+                ? raw.slice(0, MAX_CONFIG_FILE_CHARS) + '\n... (truncated)'
+                : raw;
+        if (total + trimmed.length > MAX_CONFIG_TOTAL_CHARS) break;
+        total += trimmed.length;
+        out[name] = trimmed;
+        count++;
+    }
+    return Object.keys(out).length ? out : undefined;
+}
+
+/**
  * Builds a compact JSON-serializable summary of a sampler profile,
  * suitable for sending to an LLM (a few tens of KB at most).
  */
 export function buildProfileSummary(
-    data: SamplerData
+    data: SamplerData,
+    options: ProfileSummaryOptions = {}
 ): Record<string, unknown> {
     const meta = data.metadata;
     const allocationMode =
@@ -303,22 +338,33 @@ export function buildProfileSummary(
         },
     };
 
-    return fit(summary);
+    if (options.includeConfigs) {
+        const configurations = buildConfigurations(meta?.serverConfigurations);
+        if (configurations) summary.configurations = configurations;
+    }
+
+    const budget = options.includeConfigs
+        ? MAX_JSON_CHARS + MAX_CONFIG_TOTAL_CHARS
+        : MAX_JSON_CHARS;
+    return fit(summary, budget);
 }
 
 /**
  * Drops lower-priority sections until the serialized summary fits the budget.
  */
-function fit(summary: Record<string, unknown>): Record<string, unknown> {
+function fit(
+    summary: Record<string, unknown>,
+    budget = MAX_JSON_CHARS
+): Record<string, unknown> {
     const serialize = (s: Record<string, unknown>) => JSON.stringify(s);
-    if (serialize(summary).length <= MAX_JSON_CHARS) return summary;
+    if (serialize(summary).length <= budget) return summary;
 
     const hotspots = summary.hotspots as Record<string, unknown>;
     delete hotspots.methodsByTotalTime;
-    if (serialize(summary).length <= MAX_JSON_CHARS) return summary;
+    if (serialize(summary).length <= budget) return summary;
 
     delete (summary as { timeWindows?: unknown }).timeWindows;
-    if (serialize(summary).length <= MAX_JSON_CHARS) return summary;
+    if (serialize(summary).length <= budget) return summary;
 
     delete hotspots.methodsBySelfTime;
     return summary;

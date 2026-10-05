@@ -53,6 +53,8 @@
         "apiKey": "API key",
         "apiKeyPlaceholder": "sk-…",
         "keyNote": "The API key is only stored in this browser (localStorage) and is only sent to the endpoint configured above.",
+        "sendConfigs": "Send server config file contents",
+        "configWarning": "Off by default. When enabled, the raw contents of your server config files are sent to the model and may contain sensitive values (e.g. passwords).",
         "run": "Analyze",
         "rerun": "Analyze again",
         "running": "Analyzing…",
@@ -60,6 +62,9 @@
         "copy": "Copy",
         "copied": "Copied!",
         "thinking": "Waiting for the model to respond…",
+        "askPlaceholder": "Ask a follow-up question…",
+        "send": "Send",
+        "asking": "Answering…",
         "placeholder": "Configure your API key above, then click Analyze to get hotspot analysis and optimization suggestions for this profile.",
         "errorConfig": "Please fill in the API base URL, model and API key first.",
         "emptyResponse": "Connected, but the model returned no content. Check the model name and API base URL.",
@@ -73,6 +78,7 @@
             "gc": "Garbage collection",
             "diagnosis": "Diagnosis",
             "hotspots": "Hotspot methods",
+            "configSuggestions": "Config changes",
             "steps": "Recommended steps"
         },
         "status": {
@@ -109,6 +115,9 @@
         },
         "hotspots": {
             "internal": "Internal"
+        },
+        "config": {
+            "reason": "Reason"
         },
         "valueLabels": {
             "1m": "1m",

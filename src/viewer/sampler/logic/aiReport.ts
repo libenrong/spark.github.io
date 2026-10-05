@@ -32,11 +32,20 @@ export interface DiagnosisItem {
     detail: string;
 }
 
+export interface ConfigSuggestion {
+    file: string;
+    setting: string;
+    current: string;
+    suggested: string;
+    reason: string;
+}
+
 /** Structured analysis returned by the model. */
 export interface AiReport {
     overview: string;
     diagnosis: DiagnosisItem[];
     recommendations: string[];
+    configSuggestions: ConfigSuggestion[];
 }
 
 function round(value: number, digits = 2): number {
@@ -108,10 +117,35 @@ export function parseAiReport(text: string): AiReport | undefined {
         }
     }
 
-    if (!overview && !diagnosis.length && !recommendations.length) {
+    const configSuggestions: ConfigSuggestion[] = [];
+    if (Array.isArray(obj.configSuggestions)) {
+        for (const item of obj.configSuggestions) {
+            if (!item || typeof item !== 'object') continue;
+            const c = item as Record<string, unknown>;
+            const str = (v: unknown) =>
+                typeof v === 'string' ? stripMarkdown(v) : '';
+            const suggestion: ConfigSuggestion = {
+                file: str(c.file ?? c.config ?? c.filename),
+                setting: str(c.setting ?? c.key ?? c.path),
+                current: str(c.current ?? c.oldValue ?? c.before),
+                suggested: str(c.suggested ?? c.newValue ?? c.after),
+                reason: str(c.reason ?? c.detail ?? c.why),
+            };
+            if (suggestion.file || suggestion.setting || suggestion.suggested) {
+                configSuggestions.push(suggestion);
+            }
+        }
+    }
+
+    if (
+        !overview &&
+        !diagnosis.length &&
+        !recommendations.length &&
+        !configSuggestions.length
+    ) {
         return undefined;
     }
-    return { overview, diagnosis, recommendations };
+    return { overview, diagnosis, recommendations, configSuggestions };
 }
 
 function classify(

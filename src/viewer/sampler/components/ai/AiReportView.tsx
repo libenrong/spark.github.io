@@ -8,6 +8,7 @@ import {
     buildGcRows,
     buildHotspots,
     buildLocalMetrics,
+    ConfigSuggestion,
     GcRow,
     MetricCard,
     MetricStatus,
@@ -104,6 +105,48 @@ function GcRowView({ row }: { row: GcRow }) {
                 <span>{formatDuration(row.avgIntervalMs, t)}</span>
             </div>
             <StatusChip status={row.status} />
+        </div>
+    );
+}
+
+function ConfigSuggestionRow({ item }: { item: ConfigSuggestion }) {
+    const { t } = useTranslation('sampler');
+    return (
+        <div className={styles['ai-config-item']}>
+            <div className={styles['ai-config-head']}>
+                {item.file && (
+                    <span className={styles['ai-config-file']}>
+                        {item.file}
+                    </span>
+                )}
+                {item.setting && (
+                    <code className={styles['ai-config-key']}>
+                        {item.setting}
+                    </code>
+                )}
+            </div>
+            {(item.current || item.suggested) && (
+                <div className={styles['ai-config-change']}>
+                    {item.current && (
+                        <span className={styles['ai-config-current']}>
+                            {item.current}
+                        </span>
+                    )}
+                    {item.current && item.suggested && (
+                        <span className={styles['ai-config-arrow']}>→</span>
+                    )}
+                    {item.suggested && (
+                        <span className={styles['ai-config-suggested']}>
+                            {item.suggested}
+                        </span>
+                    )}
+                </div>
+            )}
+            {item.reason && (
+                <p className={styles['ai-config-reason']}>
+                    {t('ai.config.reason')}: {item.reason}
+                </p>
+            )}
         </div>
     );
 }
@@ -239,6 +282,20 @@ export default function AiReportView({
                                     {h.method}
                                 </code>
                             </div>
+                        ))}
+                    </div>
+                </section>
+            )}
+
+            {report.configSuggestions.length > 0 && (
+                <section>
+                    <SectionTitle
+                        title={t('ai.sections.configSuggestions')}
+                        count={report.configSuggestions.length}
+                    />
+                    <div className={styles['ai-config-suggestions']}>
+                        {report.configSuggestions.map((c, i) => (
+                            <ConfigSuggestionRow key={i} item={c} />
                         ))}
                     </div>
                 </section>

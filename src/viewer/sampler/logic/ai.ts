@@ -9,6 +9,8 @@ export interface AiSettings {
     model: string;
     /** direct = browser calls the endpoint, proxy = via this site's /api/ai */
     mode: AiRequestMode;
+    /** send raw server config file contents to the model (opt-in) */
+    includeConfigs: boolean;
 }
 
 export interface AiPreset {
@@ -88,6 +90,7 @@ export function loadAiSettings(): AiSettings {
         apiKey: '',
         model: AI_PRESETS[0].model,
         mode: 'direct',
+        includeConfigs: false,
     });
     try {
         const raw = window.localStorage.getItem(STORAGE_KEY);
@@ -103,6 +106,7 @@ export function loadAiSettings(): AiSettings {
                     apiKey: parsed.apiKey,
                     model: parsed.model,
                     mode: parsed.mode === 'proxy' ? 'proxy' : 'direct',
+                    includeConfigs: parsed.includeConfigs === true,
                 };
             }
         }
@@ -129,29 +133,49 @@ export function presetFor(settings: AiSettings): string {
 
 export function buildAiMessages(
     data: SamplerData,
-    language: string
+    language: string,
+    options: { includeConfigs?: boolean } = {}
 ): { role: 'system' | 'user'; content: string }[] {
-    const summary = buildProfileSummary(data);
+    const summary = buildProfileSummary(data, {
+        includeConfigs: options.includeConfigs,
+    });
     const lang = language.toLowerCase().startsWith('zh')
         ? 'Simplified Chinese (简体中文)'
         : 'English';
 
-    const system = [
-        'You are an expert Minecraft server performance analyst.',
-        'You will receive a JSON summary of a spark profiler report (server/system statistics and the hottest sampled methods).',
-        'Respond with ONLY a valid JSON object - no markdown, no code fences, no commentary before or after - using exactly this schema:',
+    const schema: string[] = [
         '{',
         '  "overview": "2-4 sentences: the overall health conclusion of the server",',
         '  "diagnosis": [{"title": "short finding title", "detail": "1-2 sentences explaining it with exact numbers from the data"}],',
-        '  "recommendations": ["prioritized actionable step", ...]',
-        '}',
+    ];
+    if (options.includeConfigs) {
+        schema.push(
+            '  "configSuggestions": [{"file": "config file name", "setting": "exact config key or path", "current": "current value", "suggested": "suggested value", "reason": "1 sentence rationale"}],'
+        );
+    }
+    schema.push('  "recommendations": ["prioritized actionable step", ...]');
+    schema.push('}');
+
+    const system = [
+        'You are an expert Minecraft server performance analyst.',
+        'You will receive a JSON summary of a spark profiler report (server/system statistics and the hottest sampled methods).',
+        options.includeConfigs
+            ? 'The summary also includes the raw contents of the server config files under "configurations".'
+            : undefined,
+        'Respond with ONLY a valid JSON object - no markdown, no code fences, no commentary before or after - using exactly this schema:',
+        ...schema,
         'Rules:',
         '- diagnosis: 3-6 items ordered by severity; recommendations: 3-6 items ordered by priority.',
+        options.includeConfigs
+            ? '- configSuggestions: 0-8 concrete edits; only reference files and keys that actually appear in "configurations"; put the exact current value in "current" and a concrete new value in "suggested"; return an empty array if no change is warranted.'
+            : undefined,
         '- Only state facts present in the data; never invent plugin or mod names.',
         '- Reference exact numbers (%, ms, MB) from the data; if a field is missing, say the data is unavailable.',
         '- Node times are in the unit given by the "unit" field.',
         `- Respond in ${lang}.`,
-    ].join('\n');
+    ]
+        .filter((line): line is string => line !== undefined)
+        .join('\n');
 
     const user =
         'Profile summary (JSON):\n' + JSON.stringify(summary, undefined, 2);
@@ -159,6 +183,60 @@ export function buildAiMessages(
     return [
         { role: 'system', content: system },
         { role: 'user', content: user },
+    ];
+}
+
+export type AiMessage = {
+    role: 'system' | 'user' | 'assistant';
+    content: string;
+};
+
+/**
+ * Builds the messages for a follow-up question. The profile summary is
+ * included once (as in the initial analysis), followed by the model's
+ * structured analysis and the prior Q&A history, then the new question.
+ */
+export function buildFollowUpMessages(
+    data: SamplerData,
+    language: string,
+    options: { includeConfigs?: boolean },
+    analysis: string,
+    history: AiMessage[],
+    question: string
+): AiMessage[] {
+    const lang = language.toLowerCase().startsWith('zh')
+        ? 'Simplified Chinese (简体中文)'
+        : 'English';
+    const summary = buildProfileSummary(data, {
+        includeConfigs: options.includeConfigs,
+    });
+
+    const system = [
+        'You are an expert Minecraft server performance analyst.',
+        'You have already analysed a spark profiler report - that analysis is the first assistant message in this conversation.',
+        'The user will now ask follow-up questions about that report.',
+        'Answer in well-structured Markdown (headings, lists, code blocks where useful). Do NOT output JSON.',
+        'The profile summary is included again below for reference; ground every answer in it and say when something is not available.',
+        options.includeConfigs
+            ? 'The summary includes the server config file contents under "configurations".'
+            : undefined,
+        '- Keep answers focused and concrete.',
+        `- Respond in ${lang}.`,
+    ]
+        .filter((line): line is string => line !== undefined)
+        .join('\n');
+
+    return [
+        { role: 'system', content: system },
+        {
+            role: 'user',
+            content:
+                'Profile summary (JSON):\n' +
+                JSON.stringify(summary, undefined, 2),
+        },
+        { role: 'assistant', content: analysis },
+        ...history.slice(-16),
+        { role: 'user', content: question },
     ];
 }
 

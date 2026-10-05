@@ -378,6 +378,32 @@
         color: var(--text-secondary);
     }
 
+    .ai-toggle {
+        display: flex;
+        align-items: flex-start;
+        gap: 8px;
+        cursor: pointer;
+
+        input {
+            margin: 3px 0 0;
+            flex: 0 0 auto;
+        }
+
+        > span {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+            font-size: 13px;
+            color: var(--text-secondary);
+        }
+
+        small {
+            font-size: 12px;
+            font-weight: 300;
+            color: var(--text-muted);
+        }
+    }
+
     .ai-run {
         display: flex;
         align-items: center;
@@ -451,6 +477,41 @@
             background-color: var(--accent-yellow);
             animation: ai-blink 1s step-end infinite;
         }
+    }
+
+    .ai-ask {
+        display: flex;
+        gap: 8px;
+
+        input {
+            flex: 1 1 auto;
+            min-width: 0;
+        }
+
+        button {
+            flex: 0 0 auto;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 14px;
+
+            &:disabled {
+                opacity: 0.6;
+                cursor: default;
+            }
+        }
+    }
+
+    .ai-question {
+        margin: 14px 0 0;
+        padding: 6px 12px;
+        border-left: 3px solid var(--accent-yellow);
+        background-color: var(--bg-secondary);
+        border-radius: 0 6px 6px 0;
+        font-weight: 600;
+        color: var(--text-white);
+        white-space: pre-wrap;
+        word-break: break-word;
     }
 
     .ai-md {
@@ -776,6 +837,78 @@
                     overflow: hidden;
                     text-overflow: ellipsis;
                     white-space: nowrap;
+                }
+            }
+        }
+
+        .ai-config-suggestions {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+
+            .ai-config-item {
+                background-color: var(--bg-secondary);
+                border-left: 3px solid var(--accent-yellow);
+                border-radius: 6px;
+                padding: 8px 12px;
+                display: flex;
+                flex-direction: column;
+                gap: 6px;
+
+                .ai-config-head {
+                    display: flex;
+                    flex-wrap: wrap;
+                    align-items: baseline;
+                    gap: 8px;
+
+                    .ai-config-file {
+                        font-size: 12px;
+                        color: var(--text-muted);
+                    }
+
+                    .ai-config-key {
+                        font-family: 'JetBrains Mono', monospace;
+                        font-size: 13px;
+                        font-weight: 600;
+                        color: var(--text-white);
+                        background-color: var(--bg-tertiary);
+                        border-radius: 4px;
+                        padding: 1px 6px;
+                        word-break: break-all;
+                    }
+                }
+
+                .ai-config-change {
+                    display: flex;
+                    flex-wrap: wrap;
+                    align-items: baseline;
+                    gap: 8px;
+                    font-family: 'JetBrains Mono', monospace;
+                    font-size: 13px;
+                    word-break: break-all;
+
+                    .ai-config-current {
+                        color: var(--accent-red, #f44336);
+                        text-decoration: line-through;
+                        opacity: 0.85;
+                    }
+
+                    .ai-config-arrow {
+                        color: var(--text-muted);
+                    }
+
+                    .ai-config-suggested {
+                        color: var(--accent-green, #4caf50);
+                        font-weight: 600;
+                    }
+                }
+
+                .ai-config-reason {
+                    margin: 0;
+                    font-size: 12px;
+                    line-height: 1.5;
+                    color: var(--text-secondary);
+                    white-space: pre-line;
                 }
             }
         }
